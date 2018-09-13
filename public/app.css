@@ -1,0 +1,25 @@
+.img-thumbnail img {
+    width: 100%;
+}
+
+.img-thumbnail {
+    padding: 0;
+}
+
+.img-thumbnail .caption {
+    padding: 9px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.new-restaurant {
+    width: 30%;
+    margin: 25px auto;
+}
+
+.new-rating {
+    width: 30%;
+    margin: 25px auto;
+}

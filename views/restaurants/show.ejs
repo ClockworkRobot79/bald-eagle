@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+
+    <a href="/restaurants">Back</a>
+    <h1>
+        <%= restaurant.name %>
+    </h1>
+
+    <div class="container">
+        <h2>Description</h2>
+        <div>
+            <%= restaurant.description %>
+        </div>
+
+        <% 
+        if (user) { 
+        %>
+            <a href="/restaurants/<%= restaurant._id %>/ratings/new" class="btn btn-lg btn-primary">Add Rating</a>
+        <% 
+        }
+        const ratings = restaurant.ratings.filter((rating) => { return user && rating.user && user._id.equals(rating.user._id); }); 
+        if (ratings.length) {
+        %>
+            <h2>Ratings</h2>
+            <div class="row">
+                <div class="col-lg-2">
+                    <h4>Date</h4>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Rating</h4>
+                </div>
+                <div class="col-lg-7">
+                    <h4>Comment</h4>
+                </div>
+            </div>
+            <% ratings.forEach((rating) => { %>
+            <div class="row">
+                <div class="col-lg-2">
+                    <%- new Date(rating.date).toLocaleDateString() %>
+                </div>
+                <div class="col-lg-3">
+                    <%= rating.rating %>
+                </div>
+                <div class="col-lg-7">
+                    <%= rating.comment %>
+                </div>
+            </div>
+            <% }); %>
+        <% } %>
+    </div>
+
+<% include ../partials/footer %>

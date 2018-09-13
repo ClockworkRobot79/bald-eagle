@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+
+    <h1>This is the restaurant index page</h1>
+
+    <ul>
+    <% restaurants.forEach((restaurant) => { %>
+        <li>
+            <a href="/restaurants/<%= restaurant._id %>">
+                <%= restaurant.name %>
+            </a>
+        </li>
+    <% }); %>
+
+    </ul>
+    <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
+
+<% include ../partials/footer %>

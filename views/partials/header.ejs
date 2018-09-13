@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order Envy</title>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/app.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Order Envy</a>
+                </div>
+                <div class="">
+                    <ul class="nav nav-pills">
+                        <% if (user) { %>
+                            <li class="nav-item nav-link">Welcome, <%= user.username %></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">log out</a></li>
+                        <% } else { %>
+                            <li class="nav-item"><a class="nav-link" href="/login">login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register">sign up</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <% if (error && error.length) { %>
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+            <% } %>
+            <% if (success && success.length) { %>
+            <div class="alert alert-success" role="alert"><%= success %></div>
+            <% } %>
+        </div>
+
+        <div class="container">
