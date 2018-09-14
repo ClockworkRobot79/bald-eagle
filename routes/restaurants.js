@@ -49,10 +49,12 @@ router.post('/', isLoggedIn, (req, res) => {
 function averageRating(ratings, user) {
     let count = 0;
     let total = 0;
-    for (let r of ratings) {
-        if (r.user._id.equals(user._id)) {
-            count++;
-            total += r.rating;
+    if (user) {
+        for (let r of ratings) {
+            if (r.user && r.user._id.equals(user._id)) {
+                count++;
+                total += r.rating;
+            }
         }
     }
 
@@ -61,7 +63,7 @@ function averageRating(ratings, user) {
 
 // 'show' route
 router.get('/:restaurantID', (req, res) => {
-    Restaurant.findById(req.params.restaurantID).populate('menuItems').populate('ratings').exec((err, restaurant) => {
+    Restaurant.findById(req.params.restaurantID).populate({ path: 'menuItems', populate: {path: 'ratings'}}).populate('ratings').exec((err, restaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
         } else {

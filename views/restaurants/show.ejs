@@ -43,7 +43,7 @@
                         <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
                     </div>
                     <div class="col-lg-1">
-                        <%- averageRating(menuItem.ratings) %>
+                        <%- averageRating(menuItem.ratings, user) %>
                     </div>
                     <div class="col-lg-1">
                         <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>

@@ -19,12 +19,6 @@ router.get('/new', canEditRestaurant, (req, res) => {
     }
 });
 
-// 'show' route
-// no reason to view a single rating, redirect to restaurant index page
-router.get('/:ratingID', (req, res) => {
-    res.redirect('/restaurants');
-});
-
 // 'create' route
 router.post('/', canEditRestaurant, (req, res) => {
     const newRating = {
@@ -51,6 +45,12 @@ router.post('/', canEditRestaurant, (req, res) => {
             res.redirect('back');
         }
     });
+});
+
+// 'show' route
+// no reason to view a single rating, redirect to restaurant index page
+router.get('/:ratingID', (req, res) => {
+    res.redirect('/restaurants');
 });
 
 // 'edit' route

@@ -14,7 +14,7 @@ const seedData = require('./seedData');
 
 const indexRoutes = require('./routes/index');
 const menuItemRoutes = require('./routes/menuItems');
-// const menuItemRatingRoutes = require('./routes/menuItemRatings');
+const ratingRoutes = require('./routes/ratings');
 const restaurantRoutes = require('./routes/restaurants');
 const restaurantRatingRoutes = require('./routes/restaurantRatings');
 
@@ -65,7 +65,7 @@ app.use('/', indexRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/restaurants/:restaurantID/ratings', restaurantRatingRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
-// app.use('/restaurants/:restaurantID/menuItems/rating', menuItemRatingRoutes);
+app.use('/restaurants/:restaurantID/menuItems/:menuItemID/ratings', ratingRoutes);
 
 const PORT = process.env.PORT || 1979;
 app.listen(PORT, () => {
