@@ -3,6 +3,7 @@ const router = express.Router();
 
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
+const { filterUserOwned } = require('../utils/misc');
 const Restaurant = require('../models/restaurant');
 
 // 'index' route
@@ -19,17 +20,6 @@ router.get('/', (req, res) => {
 // 'new' route
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('restaurants/new');
-});
-
-// 'show' route
-router.get('/:restaurantID', (req, res) => {
-    Restaurant.findById(req.params.restaurantID).populate('menuItems').populate('ratings').exec((err, restaurant) => {
-        if (err) {
-            console.error(`Error: ${err.message}`);
-        } else {
-            res.render('restaurants/show', {restaurant});
-        }
-    });
 });
 
 // 'create' route
@@ -52,6 +42,30 @@ router.post('/', isLoggedIn, (req, res) => {
             console.log('Created: ' + createdRestaurant);
             req.flash(`success`, `Successfully created restaurant!`);
             res.redirect('/restaurants');
+        }
+    });
+});
+
+function averageRating(ratings, user) {
+    let count = 0;
+    let total = 0;
+    for (let r of ratings) {
+        if (r.user._id.equals(user._id)) {
+            count++;
+            total += r.rating;
+        }
+    }
+
+    return (count ? total / count : '--');
+}
+
+// 'show' route
+router.get('/:restaurantID', (req, res) => {
+    Restaurant.findById(req.params.restaurantID).populate('menuItems').populate('ratings').exec((err, restaurant) => {
+        if (err) {
+            console.error(`Error: ${err.message}`);
+        } else {
+            res.render('restaurants/show', {restaurant, averageRating, filterUserOwned});
         }
     });
 });

@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+    <a href="javascript:history.back()">Back</a>
+
+    <div class="new-menu-item">
+        <h1>
+            <%= menuItem.name %>
+        </h1>
+        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/edit" class="btn btn-warning">Edit</a>
+        <form class="delete-form" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+
+        <div class="container">
+            <h2>Description</h2>
+            <div>
+                <%= menuItem.description %>
+            </div>
+
+            <%
+            const newRatingLink = `/restaurants/${restaurant._id}/menuItem/${menuItem._id}/ratings/new`;
+            const ratings = filterUserOwned(user, menuItem.ratings); 
+            %>
+            <% include ../partials/ratings %>
+        </div>
+    </div>
+
+<% include ../partials/footer %>

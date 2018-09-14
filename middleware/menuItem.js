@@ -22,25 +22,12 @@ module.exports = {
 
     /**
      * Passes if there is a valid user,
-     * the menu item referenced in req is found,
-     * and the current user is the creator
+     * the menu item referenced in req is found
      */
-    userOwnsMenuItem: (req, res, next) => {
+    canEditMenuItem: (req, res, next) => {
         isLoggedIn(req, res, () => {
             module.exports.cacheMenuItem(req, res, () => {
-                const { menuItem } = res.locals;
-                if (isOwner(req.user, menuItem, 'user')) {
-                    return next();
-                }
-
-                req.flash(`error`, `You don't have permission for that`);
-
-                // clear out the menu item so it isn't used by accident
-                delete res.locals.menuItem;
-
-                // if they are logged in but anything else goes wrong,
-                // just send them back where they came from
-                res.redirect('back');
+                return next();
             });
         });
     },

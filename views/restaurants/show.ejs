@@ -11,39 +11,47 @@
             <%= restaurant.description %>
         </div>
 
-        <% 
+        <%
+        const newRatingLink = `/restaurants/${restaurant._id}/ratings/new`;
+        const ratings = filterUserOwned(user, restaurant.ratings); 
+        %>
+        <% include ../partials/ratings %>
+
+        <h2>Menu Items</h2>
+        <%
         if (user) { 
         %>
-            <a href="/restaurants/<%= restaurant._id %>/ratings/new" class="btn btn-lg btn-primary">Add Rating</a>
+            <a href="/restaurants/<%= restaurant._id %>/menuItems/new" class="btn btn-primary">Add Menu Item</a>
         <% 
         }
-        const ratings = restaurant.ratings.filter((rating) => { return user && rating.user && user._id.equals(rating.user._id); }); 
-        if (ratings.length) {
+        if (restaurant.menuItems.length) {
         %>
-            <h2>Ratings</h2>
             <div class="row">
-                <div class="col-lg-2">
-                    <h4>Date</h4>
+                <div class="col-lg-4">
+                    <h4>Name</h4>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <h4>Rating</h4>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-6">
                     <h4>Comment</h4>
                 </div>
             </div>
-            <% ratings.forEach((rating) => { %>
-            <div class="row">
-                <div class="col-lg-2">
-                    <%- new Date(rating.date).toLocaleDateString() %>
+            <% restaurant.menuItems.forEach((menuItem) => { %>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
+                    </div>
+                    <div class="col-lg-1">
+                        <%- averageRating(menuItem.ratings) %>
+                    </div>
+                    <div class="col-lg-1">
+                        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <%= menuItem.description %>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <%= rating.rating %>
-                </div>
-                <div class="col-lg-7">
-                    <%= rating.comment %>
-                </div>
-            </div>
             <% }); %>
         <% } %>
     </div>
