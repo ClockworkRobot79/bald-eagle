@@ -16,7 +16,6 @@ const indexRoutes = require('./routes/index');
 const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
 const restaurantRoutes = require('./routes/restaurants');
-const restaurantRatingRoutes = require('./routes/restaurantRatings');
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("./lib"));
@@ -63,8 +62,11 @@ app.use((req, res, next) => {
 // wire up all the sub-routes
 app.use('/', indexRoutes);
 app.use('/restaurants', restaurantRoutes);
-app.use('/restaurants/:restaurantID/ratings', restaurantRatingRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
+
+// these endpoints share the same route handler because the logic is nearly identical
+// there are slight variations if `menuItemID` is present in the request URL
+app.use('/restaurants/:restaurantID/ratings', ratingRoutes);
 app.use('/restaurants/:restaurantID/menuItems/:menuItemID/ratings', ratingRoutes);
 
 const PORT = process.env.PORT || 1979;
