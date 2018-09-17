@@ -27,6 +27,7 @@ router.post('/', isLoggedIn, (req, res) => {
     const newRestaurant = {
         name: req.body.name,
         description: req.body.description,
+        website: req.body.website,
         location: {
             address: req.body.address,
             // lat: Number,  //* TODO: figure out how to pull info from phone/browser

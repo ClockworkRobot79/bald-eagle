@@ -3,9 +3,22 @@
     <a href="/restaurants">Back</a>
     <h1>
         <%= restaurant.name %>
+        <div class="float-right">
+            <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-warning">Edit</a>
+            <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
     </h1>
 
     <div class="container">
+        <% if (restaurant.website) { %>
+            <h2>Website</h2>
+            <div>
+                <a href="<%= restaurant.website %>" target="_blank"><%= restaurant.website %></a>
+            </div>
+        <% } %>
+
         <h2>Description</h2>
         <div>
             <%= restaurant.description %>
@@ -17,13 +30,13 @@
         %>
         <% include ../partials/ratings %>
 
-        <h2>Menu Items</h2>
-        <%
-        if (user) { 
-        %>
-            <a href="/restaurants/<%= restaurant._id %>/menuItems/new" class="btn btn-primary">Add Menu Item</a>
+        <h2>
+            Menu Items
+            <% if (user) { %>
+                <a href="/restaurants/<%= restaurant._id %>/menuItems/new" class="btn btn-xs btn-primary">+</a>
+            <% } %>
+        </h2>
         <% 
-        }
         if (restaurant.menuItems.length) {
         %>
             <div class="row">

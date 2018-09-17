@@ -10,21 +10,11 @@
     padding: 9px;
 }
 
-.delete-form {
+.delete-item {
     display: inline;
 }
 
-.new-restaurant {
-    width: 30%;
-    margin: 25px auto;
-}
-
-.new-rating {
-    width: 30%;
-    margin: 25px auto;
-}
-
-.new-menu-item {
+.new-item-form {
     width: 30%;
     margin: 25px auto;
 }
