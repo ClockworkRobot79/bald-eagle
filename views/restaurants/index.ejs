@@ -12,6 +12,9 @@
     <% }); %>
 
     </ul>
-    <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
+
+    <% if (user) { %>
+        <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
+    <% } %>
 
 <% include ../partials/footer %>

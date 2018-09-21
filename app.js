@@ -12,6 +12,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const seedData = require('./seedData');
 
+const friendRoutes = require('./routes/friends');
 const indexRoutes = require('./routes/index');
 const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
 
 // wire up all the sub-routes
 app.use('/', indexRoutes);
+app.use('/users/:userID/friends', friendRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
 

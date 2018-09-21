@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+
+    <h1>This is the friend index page</h1>
+
+    <ul>
+    <% friends.forEach((friend) => { %>
+        <li>
+            <a href="/users/<%= user._id %>/friends/<%= friend._id %>">
+                <%= friend.firstName || friend.username %>
+            </a>
+        </li>
+    <% }); %>
+    </ul>
+
+    <a href="/users/<%= user._id %>/friends/new" class="btn btn-lg btn-primary">Add Friend</a>
+
+<% include ../partials/footer %>

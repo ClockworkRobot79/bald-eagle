@@ -1,3 +1,12 @@
-<h1>This is the home page</h1> 
+<% include ./partials/header %>
 
-<a href="/restaurants">Restaurants</a>
+    <h1>This is the home page</h1> 
+
+    <ul>
+        <li><a href="/restaurants">Restaurants</a></li>
+        <% if (user) { %>
+            <li><a href="/users/<%= user._id %>/friends">Friends</a></li>
+        <% } %>
+    </ul>
+
+<% include ./partials/footer %>
