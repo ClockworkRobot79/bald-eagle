@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+
+    <div style="text-align:center">
+        <h1>Edit the list</h1>
+    </div>
+
+    <div class="new-item-form">
+        <form class="form-inline" action="/lists/<%= list._id %>?_method=PUT" method="POST">
+            <div class="form-group row">
+                <div class="col-lg-1"></div>
+                <div>
+                    <input class="form-control" type="text" name="list[name]" placeholder="List name" value="<%= list.name %>" autofocus>
+                </div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block">Save</button>
+        </form>
+
+        <a href="/lists/<%= list._id %>">Back</a>
+    </div>
+
+<% include ../partials/footer %>

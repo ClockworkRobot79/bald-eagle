@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+
+    <div style="text-align:center">
+        <h1>Create a new list</h1>
+    </div>
+
+    <div class="new-item-form">
+        <form class="form-inline" action="/lists" method="POST">
+            <div class="form-group row">
+                <div class="col-lg-1"></div>
+                <div>
+                    <input class="form-control" type="text" name="list[name]" placeholder="List name" autofocus>
+                </div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block">Create</button>
+        </form>
+
+        <a href="/lists">Back</a>
+    </div>
+
+<% include ../partials/footer %>

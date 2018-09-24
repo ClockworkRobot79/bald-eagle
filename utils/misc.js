@@ -3,8 +3,8 @@
  */
 module.exports = {
     isOwner: (user, obj, param) => {
-        const { id } = (obj ? obj[param] : {});
-        return (user && id && id.equals(user._id));
+        const { _id } = (obj ? obj[param] : {});
+        return (user && _id && _id.equals(user._id));
     },
 
     // return all objects in the given array that are owned by the given user

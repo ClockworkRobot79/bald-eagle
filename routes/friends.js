@@ -122,8 +122,9 @@ router.get('/:friendID', isLoggedIn, (req, res) => {
                     const page = (req.query.p || 0);
                     const start = page * pageSize;
                     const end = start + pageSize;
-                    const prevPage = (page > 0 ? `/users/${res.locals.user._id}/friends/${req.params.friendID}?p=${page - 1}` : undefined);
-                    const nextPage = (end < recent.length ? `/users/${res.locals.user._id}/friends/${req.params.friendID}?p=${page + 1}` : undefined);
+                    const urlBase = `/users/${res.locals.user._id}/friends/${req.params.friendID}?p=`;
+                    const prevPage = (page > 0 ? urlBase + (page - 1) : undefined);
+                    const nextPage = (end < recent.length ? urlBase + (page + 1) : undefined);
                     recent = recent.slice(start, end);
 
                     const friendName = (friend.firstName || friend.username);

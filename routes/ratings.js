@@ -67,7 +67,7 @@ router.get('/:ratingID', (req, res) => {
 });
 
 // 'edit' route
-router.get('/:ratingID/edit', isLoggedIn, cacheRestaurant, cacheMenuItem, userOwnsRating, (req, res) => {
+router.get('/:ratingID/edit', userOwnsRating, cacheRestaurant, cacheMenuItem, (req, res) => {
     const { restaurant, menuItem, rating } = res.locals;
     if (rating) {
         const restaurantRoute = (restaurant ? `/restaurants/${restaurant._id}` : ``);
@@ -80,7 +80,7 @@ router.get('/:ratingID/edit', isLoggedIn, cacheRestaurant, cacheMenuItem, userOw
 });
 
 // 'update' route
-router.put('/:ratingID', isLoggedIn, cacheRestaurant, cacheMenuItem, userOwnsRating, (req, res) => {
+router.put('/:ratingID', userOwnsRating, cacheRestaurant, cacheMenuItem, (req, res) => {
     // since we already have the rating we can update it directly and save
     const { restaurant, menuItem, rating } = res.locals;
     if (rating) {
@@ -96,7 +96,7 @@ router.put('/:ratingID', isLoggedIn, cacheRestaurant, cacheMenuItem, userOwnsRat
 });
 
 // 'delete' route
-router.delete('/:ratingID', isLoggedIn, cacheRestaurant, cacheMenuItem, userOwnsRating, (req, res) => {
+router.delete('/:ratingID', userOwnsRating, cacheRestaurant, cacheMenuItem, (req, res) => {
     // since we already have the rating we can delete it directly
     const { menuItem, restaurant, rating } = res.locals;
     if (rating) {
