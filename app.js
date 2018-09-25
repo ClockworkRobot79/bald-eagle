@@ -15,6 +15,7 @@ const seedData = require('./seedData');
 const friendRoutes = require('./routes/friends');
 const indexRoutes = require('./routes/index');
 const listRoutes = require('./routes/lists');
+const listElementRoutes = require('./routes/listElements');
 const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
 const restaurantRoutes = require('./routes/restaurants');
@@ -64,6 +65,7 @@ app.use((req, res, next) => {
 // wire up all the sub-routes
 app.use('/', indexRoutes);
 app.use('/users/:userID/friends', friendRoutes);
+app.use('/lists/:listID/', listElementRoutes);
 app.use('/lists', listRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);

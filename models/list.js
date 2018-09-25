@@ -7,13 +7,10 @@ const listSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    elements: [{
-        kind: String, // Restaurant or MenuItem
-        item: {
-            type: mongoose.Schema.Types.ObjectId,
-            refPath: 'elements.kind'
-        },
-    }]
+    restaurants: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    }],
 },
 {
   timestamps: true

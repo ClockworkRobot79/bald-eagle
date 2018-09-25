@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const isLoggedIn = require('../middleware/isLoggedIn');
-const { canEditRestaurant } = require('../middleware/restaurant');
-const { filterUserOwned } = require('../utils/misc');
-const Rating = require('../models/rating');
 const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
 

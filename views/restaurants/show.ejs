@@ -4,6 +4,17 @@
     <h1>
         <%= restaurant.name %>
         <div class="float-right">
+            <% if (lists.length) { %>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()" class="btn btn-success">Add to List</button>
+                    <div id="listDropdown" class="dropdown-content">
+                        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                        <% lists.forEach((list) => { %>
+                            <h4><a href="/lists/<%= list._id %>/addRestaurant/<%= restaurant._id %>"><%= list.name %></a></h4>
+                        <% }); %>
+                    </div>
+                </div>
+            <% } %>
             <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-warning">Edit</a>
             <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete</button>
@@ -68,5 +79,28 @@
             <% }); %>
         <% } %>
     </div>
+
+    <script>
+        // When the user clicks on the button,
+        // toggle between hiding and showing the dropdown content
+        function toggleDropdown() {
+            document.getElementById("listDropdown").classList.toggle("show");
+        }
+
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("listDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
 <% include ../partials/footer %>

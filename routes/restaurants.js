@@ -4,6 +4,7 @@ const router = express.Router();
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
 const { filterUserOwned } = require('../utils/misc');
+const List = require('../models/list');
 const Restaurant = require('../models/restaurant');
 
 // 'index' route
@@ -67,8 +68,16 @@ router.get('/:restaurantID', (req, res) => {
     Restaurant.findById(req.params.restaurantID).populate({ path: 'menuItems', populate: {path: 'ratings'}}).populate('ratings').exec((err, restaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
+            res.redirect(`/restaurants`);
         } else {
-            res.render('restaurants/show', {restaurant, averageRating, filterUserOwned});
+            List.find({user: res.locals.user}, (err, lists) => {
+                if (err) {
+                    console.error(`Error fetching lists: ${err.message}`);
+                    res.redirect(`/restaurants`);
+                } else {
+                    res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists });
+                }
+            });
         }
     });
 });
@@ -77,7 +86,7 @@ router.get('/:restaurantID', (req, res) => {
 router.get('/:restaurantID/edit', canEditRestaurant, (req, res) => {
     const { restaurant } = res.locals;
     if (restaurant) {
-        res.render('restaurants/edit', {restaurant});
+        res.render('restaurants/edit', { restaurant });
     }
 });
 

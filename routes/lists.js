@@ -51,7 +51,7 @@ router.post('/', isLoggedIn, (req, res) => {
 
 // 'show' route
 router.get('/:listID', isLoggedIn, (req, res) => {
-    List.findById(req.params.listID).populate('elements').exec((err, foundList) => {
+    List.findById(req.params.listID).populate('restaurants').exec((err, foundList) => {
         if (err) {
             console.error(`Error: ${err.message}`);
             req.flash(`error`, `Error creating list: ${err.message}`);
