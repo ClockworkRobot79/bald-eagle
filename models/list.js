@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 // schema setup
 const listSchema = new mongoose.Schema({
     name: String,
-    user: {
+    users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
+    }],
     restaurants: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant'

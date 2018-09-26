@@ -124,7 +124,7 @@ router.get('/:friendID', isLoggedIn, (req, res) => {
                     const nextPage = (end < recent.length ? urlBase + (page + 1) : undefined);
                     recent = recent.slice(start, end);
 
-                    const friendName = (friend.firstName || friend.username);
+                    const friendName = friend.getDisplayName();
                     res.render('friends/show', { friendName, recent, prevPage, nextPage });
                 }
             });

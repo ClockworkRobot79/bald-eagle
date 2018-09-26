@@ -6,6 +6,7 @@ const { canEditRestaurant } = require('../middleware/restaurant');
 const { filterUserOwned } = require('../utils/misc');
 const List = require('../models/list');
 const Restaurant = require('../models/restaurant');
+const User = require('../models/user');
 
 // 'index' route
 router.get('/', (req, res) => {
@@ -70,12 +71,16 @@ router.get('/:restaurantID', (req, res) => {
             console.error(`Error: ${err.message}`);
             res.redirect(`/restaurants`);
         } else {
-            List.find({user: res.locals.user}, (err, lists) => {
+            List.find({users: res.locals.user}, (err, lists) => {
                 if (err) {
                     console.error(`Error fetching lists: ${err.message}`);
                     res.redirect(`/restaurants`);
                 } else {
-                    res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists });
+                    const { _id } = (res.locals.user || {});
+                    User.findById(_id).populate('friends').exec((err, user) => {
+                        const friends = (user || {}).friends || [];
+                        res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, friends });
+                    });
                 }
             });
         }

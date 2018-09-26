@@ -29,7 +29,7 @@ module.exports = {
         isLoggedIn(req, res, () => {
             module.exports.cacheList(req, res, () => {
                 const { list, user } = res.locals;
-                if (isOwner(user, list, 'user')) {
+                if (isOwner(user, list, 'users')) {
                     return next();
                 }
 

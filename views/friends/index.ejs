@@ -6,7 +6,7 @@
     <% friends.forEach((friend) => { %>
         <li>
             <a href="/users/<%= user._id %>/friends/<%= friend._id %>">
-                <%= friend.firstName || friend.username %>
+                <%= friend.getDisplayName() %>
             </a>
         </li>
     <% }); %>

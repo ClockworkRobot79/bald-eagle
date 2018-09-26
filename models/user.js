@@ -14,6 +14,20 @@ const UserSchema = new mongoose.Schema({
          }
     ],
 });
+
+UserSchema.methods.getDisplayName = function getDisplayName() {
+    let displayName = '';
+    if (this.firstName) {
+        displayName = this.firstName;
+        if (this.lastName) {
+            displayName += ' ' + this.lastName;
+        }
+    } else {
+        displayName = this.username;
+    }
+    return displayName;
+};
+
 UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", UserSchema);

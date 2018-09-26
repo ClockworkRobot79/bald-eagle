@@ -4,10 +4,11 @@ const router = express.Router({mergeParams: true});
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { userOwnsList } = require('../middleware/list');
 const List = require('../models/list');
+const User = require('../models/user');
 
 // 'index' route
 router.get('/', isLoggedIn, (req, res) => {
-    List.find({user: res.locals.user}, (err, lists) => {
+    List.find({users: res.locals.user}, (err, lists) => {
         if (err) {
             console.error(`Error: ${err.message}`);
             req.flash(`error`, `Error rendering lists: ${err.message}`);
@@ -27,7 +28,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 // 'create' route
 router.post('/', isLoggedIn, (req, res) => {
     let newList = req.body.list;
-    newList.user = res.locals.user;
+    newList.users = [res.locals.user];
     
     List.create(newList, (err, createdList) => {
         if (err) {
@@ -56,7 +57,11 @@ router.get('/:listID', isLoggedIn, (req, res) => {
             console.error(`Error: ${err.message}`);
             req.flash(`error`, `Error creating list: ${err.message}`);
         } else {
-            res.render('lists/show', { list: foundList });
+            const { _id } = (res.locals.user || {});
+            User.findById(_id).populate('friends').exec((err, user) => {
+                const friends = (user || {}).friends || [];
+                res.render('lists/show', { list: foundList, friends });
+            });
         }
     });
 });
@@ -104,6 +109,18 @@ router.delete('/:listID', userOwnsList, (req, res) => {
     }
 
     res.redirect(`/lists`);
+});
+
+// 'addOwner'
+router.get('/:listID/addOwner/:userID', userOwnsList, (req, res) => {
+    const { list } = res.locals;
+    if (list && list.users.addToSet(req.params.userID).length) {
+        list.save();
+        req.flash(`success`, `Added as owner of the list!`);
+    }
+
+    // always send them back where they came from
+    res.redirect('back');
 });
 
 module.exports = router;
