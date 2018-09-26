@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
     <h1 class="page-header">
-        This is the show list for <%= list.name %>
+        <%= list.name %>
     </h1>
     <div class="item-action">
         <form class="delete-item" action="/lists/<%= list._id %>?_method=DELETE" method="POST">
@@ -14,7 +14,8 @@
     <% if (friends.length) { %>
         <div class="dropdown item-action">
             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Share with...</button>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" id="friendDropdown">
+                <input type="text" id="friendInput" onkeyup="filterFunction('friendInput', 'friendDropdown')" placeholder="Search for friends...">
                 <% friends.forEach((friend) => { %>
                     <a class="dropdown-item" href="/lists/<%= list._id %>/addOwner/<%= friend._id %>"><%= friend.getDisplayName() %></a>
                 <% }); %>
@@ -25,16 +26,18 @@
     <div class="container">
         <% list.restaurants.forEach((restaurant) => { %>
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-2">
+                    <a href="/lists/<%= list._id %>/removeRestaurant/<%= restaurant._id %>" class="btn btn-danger">Delete</a>
+                </div>
+                <div class="col-lg-10">
                     <a href="/restaurants/<%= restaurant._id %>">
                         <%= restaurant.name %>
                     </a>
                 </div>
-                <div class="col-lg-3 float-right">
-                    <a href="/lists/<%= list._id %>/removeRestaurant/<%= restaurant._id %>" class="btn btn-danger">Delete</a>
-                </div>
             </div>
         <% }); %>
     </div>
+
+    <script type="text/javascript" src="/script/dropdownHandler.js"></script>
 
 <% include ../partials/footer %>

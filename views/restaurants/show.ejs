@@ -1,11 +1,5 @@
 <% include ../partials/header %>
 
-    <script>
-        $(document).not("#friendDropdown").click(function() {
-            $("#friendDropdown").hide();
-        });
-    </script>
-
     <div>
         <a href="/restaurants">Back</a>
     </div>
@@ -23,7 +17,8 @@
     <% if (lists.length) { %>
         <div class="dropdown item-action">
             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Add to List</button>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" id="listDropdown">
+                <input type="text" id="listInput" onkeyup="filterFunction('listInput', 'listDropdown')" placeholder="Search for lists...">
                 <% lists.forEach((list) => { %>
                     <a class="dropdown-item" href="/lists/<%= list._id %>/addRestaurant/<%= restaurant._id %>"><%= list.name %></a>
                 <% }); %>
@@ -33,7 +28,8 @@
     <% if (friends.length) { %>
         <div class="dropdown item-action">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Recommend to...</button>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" id="friendDropdown">
+                <input type="text" id="friendInput" onkeyup="filterFunction('friendInput', 'friendDropdown')" placeholder="Search for friends...">
                 <% friends.forEach((friend) => { %>
                     <a class="dropdown-item" href="/users/<%= user._id %>/share/<%= friend._id %>?restaurant=<%= restaurant._id %>"><%= friend.getDisplayName() %></a>
                 <% }); %>
@@ -98,5 +94,7 @@
             <% }); %>
         <% } %>
     </div>
+
+    <script type="text/javascript" src="/script/dropdownHandler.js"></script>
 
 <% include ../partials/footer %>
