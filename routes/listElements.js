@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-const mongoose = require('mongoose');
 
 const { userOwnsList } = require('../middleware/list');
 const Restaurant = require('../models/restaurant');

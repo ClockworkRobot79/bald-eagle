@@ -9,6 +9,9 @@ var menuItemSchema = new mongoose.Schema({
             ref: "Rating"
          }
     ],
+},
+{
+  timestamps: true
 });
  
 module.exports = mongoose.model("MenuItem", menuItemSchema);

@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema({
             ref: "User"
          }
     ],
+},
+{
+  timestamps: true
 });
 
 UserSchema.methods.getDisplayName = function getDisplayName() {

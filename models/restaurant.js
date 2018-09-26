@@ -22,6 +22,9 @@ const restaurantSchema = new mongoose.Schema({
             ref: "Rating"
          }
     ],
+},
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);

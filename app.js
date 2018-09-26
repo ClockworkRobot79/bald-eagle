@@ -18,6 +18,7 @@ const listRoutes = require('./routes/lists');
 const listElementRoutes = require('./routes/listElements');
 const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
+const recommendationRoutes = require('./routes/recommendations');
 const restaurantRoutes = require('./routes/restaurants');
 
 app.use(express.static(__dirname + "/public"));
@@ -58,12 +59,14 @@ seedData();
 app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.error = req.flash('error');
+    res.locals.warning = req.flash('warning');
     res.locals.success = req.flash('success');
     next();
 });
 
 // wire up all the sub-routes
 app.use('/', indexRoutes);
+app.use('/users/share/:friendID', recommendationRoutes);
 app.use('/users/:userID/friends', friendRoutes);
 app.use('/lists/:listID/', listElementRoutes);
 app.use('/lists', listRoutes);

@@ -31,7 +31,7 @@
             <div class="dropdown-menu" id="friendDropdown">
                 <input type="text" id="friendInput" onkeyup="filterFunction('friendInput', 'friendDropdown')" placeholder="Search for friends...">
                 <% friends.forEach((friend) => { %>
-                    <a class="dropdown-item" href="/users/<%= user._id %>/share/<%= friend._id %>?restaurant=<%= restaurant._id %>"><%= friend.getDisplayName() %></a>
+                    <a class="dropdown-item" href="/users/share/<%= friend._id %>?restaurant=<%= restaurant._id %>"><%= friend.getDisplayName() %></a>
                 <% }); %>
             </div>
         </div>
