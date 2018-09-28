@@ -19,23 +19,7 @@
             <% } %>
         </div>
         <div class="col-lg-6">
-            <% if (recommendations.length) { %>
-                <h2>Recommendations</h2>
-                <% recommendations.forEach((recommendation) => { %>
-                    <div class="row">
-                        <div class="col-lg-6 float-left">
-                            <a href="/restaurants/<%= recommendation.restaurant._id %>">
-                                <%= recommendation.restaurant.name %>
-                            </a>
-                        </div>
-                        <div class="col-lg-6 float-right">
-                            <form class="delete-item" action="/users/share/<%= user._id %>/<%= recommendation._id %>?_method=DELETE" method="POST">
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                <% }); %>
-            <% } %>
+            <% include ../partials/recommendList %>
         </div>
     </div>
 

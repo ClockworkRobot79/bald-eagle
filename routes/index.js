@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
             req.flash(`error`, `Failed to grab recommendations: ${err.message}`);
         }
         const numRecs = req.query.numRecs || 5;
-        res.render('home', { recommendations, numRecs });
+        res.render('home', { recommendations: recommendations.slice(0, numRecs) });
     });
 });
 
