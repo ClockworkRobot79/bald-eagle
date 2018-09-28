@@ -7,15 +7,7 @@ const User = require('../models/user');
 
 // 'index' route
 router.get('/', isLoggedIn, (req, res) => {
-    User.findById(res.locals.user._id).populate('friends').exec((err, user) => {
-        if (err) {
-            console.error(`Error: ${err.message}`);
-            res.redirect(`/users/${res.locals.user._id}/friends`);
-        } else {
-            const friends = user.friends;
-            res.render('friends/index', { friends });
-        }
-    });
+    res.render('friends/index');
 });
 
 // 'new' route

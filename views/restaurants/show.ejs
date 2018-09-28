@@ -25,17 +25,7 @@
             </div>
         </div>
     <% } %>
-    <% if (friends.length) { %>
-        <div class="dropdown item-action">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Recommend to...</button>
-            <div class="dropdown-menu" id="friendDropdown">
-                <input type="text" id="friendInput" onkeyup="filterFunction('friendInput', 'friendDropdown')" placeholder="Search for friends...">
-                <% friends.forEach((friend) => { %>
-                    <a class="dropdown-item" href="/users/share/<%= friend._id %>?restaurant=<%= restaurant._id %>"><%= friend.getDisplayName() %></a>
-                <% }); %>
-            </div>
-        </div>
-    <% } %>
+    <% include ../partials/recommendDropdown %>
 
     <div class="container">
         <% if (restaurant.website) { %>
@@ -55,6 +45,26 @@
         const ratings = filterUserOwned(user, restaurant.ratings); 
         %>
         <% include ../partials/ratings %>
+
+        <% if (recommendations.length) { %>
+            <div class="float-right">
+                <h2>Rercommendations</h2>
+                <% recommendations.forEach((recommendation) => { %>
+                    <div class="row">
+                        <div class="col-lg-6 float-left">
+                            <a href="/restaurants/<%= recommendation.restaurant._id %>/menuItems/<%= recommendation.menuItem._id %>">
+                                <%= recommendation.menuItem.name %>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 float-right">
+                            <form class="delete-item" action="/users/share/<%= user._id %>/<%= recommendation._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
 
         <h2>
             Menu Items

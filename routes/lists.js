@@ -57,11 +57,7 @@ router.get('/:listID', isLoggedIn, (req, res) => {
             console.error(`Error: ${err.message}`);
             req.flash(`error`, `Error creating list: ${err.message}`);
         } else {
-            const { _id } = (res.locals.user || {});
-            User.findById(_id).populate('friends').exec((err, user) => {
-                const friends = (user || {}).friends || [];
-                res.render('lists/show', { list: foundList, friends });
-            });
+            res.render('lists/show', { list: foundList });
         }
     });
 });

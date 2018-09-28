@@ -35,4 +35,17 @@ router.get('/', isLoggedIn, (req, res) => {
     });
 });
 
+// 'remove' a recommendation
+router.delete('/:recommendationID', isLoggedIn, (req, res) => {
+    Recommendation.findByIdAndRemove(req.params.recommendationID, (err, recommendation) => {
+      if (err) {
+            req.flash('error', 'Failed to delete recommendation');
+        } else {
+            req.flash('success', 'Recommendation deleted');
+        }
+
+        res.redirect('back');
+    });
+});
+
 module.exports = router;

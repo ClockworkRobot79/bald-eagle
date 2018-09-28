@@ -2,19 +2,41 @@
 
     <h1>This is the restaurant index page</h1>
 
-    <ul>
-    <% restaurants.forEach((restaurant) => { %>
-        <li>
-            <a href="/restaurants/<%= restaurant._id %>">
-                <%= restaurant.name %>
-            </a>
-        </li>
-    <% }); %>
+    <div class="row">
+        <div class="col-lg-6">
+            <ul>
+            <% restaurants.forEach((restaurant) => { %>
+                <li>
+                    <a href="/restaurants/<%= restaurant._id %>">
+                        <%= restaurant.name %>
+                    </a>
+                </li>
+            <% }); %>
+            </ul>
 
-    </ul>
-
-    <% if (user) { %>
-        <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
-    <% } %>
+            <% if (user) { %>
+                <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
+            <% } %>
+        </div>
+        <div class="col-lg-6">
+            <% if (recommendations.length) { %>
+                <h2>Recommendations</h2>
+                <% recommendations.forEach((recommendation) => { %>
+                    <div class="row">
+                        <div class="col-lg-6 float-left">
+                            <a href="/restaurants/<%= recommendation.restaurant._id %>">
+                                <%= recommendation.restaurant.name %>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 float-right">
+                            <form class="delete-item" action="/users/share/<%= user._id %>/<%= recommendation._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
 
 <% include ../partials/footer %>

@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
 const passport = require('passport');
+
+const Recommendation = require('../models/recommendation');
 const User = require('../models/user');
 
 // index route
 router.get('/', (req, res) => {
-    res.render('home');
+    Recommendation.find({for: (req.user || {})._id}).populate('restaurant').populate('menuItem').sort('-updatedAt').exec((err, recommendations) => {
+        if (err) {
+            console.error(err);
+            req.flash(`error`, `Failed to grab recommendations: ${err.message}`);
+        }
+        const numRecs = req.query.numRecs || 5;
+        res.render('home', { recommendations, numRecs });
+    });
 });
 
 // show signup form

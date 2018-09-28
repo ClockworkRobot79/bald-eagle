@@ -3,16 +3,19 @@
     <a href="/restaurants/<%= restaurant._id %>">Back</a>
 
     <div>
-        <h1>
+        <h1 class="page-header">
             <%= menuItem.name %>
-            <div class="float-right">
-                <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/edit" class="btn btn-warning">Edit</a>
-                <form class="delete-item" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
-            </div>
         </h1>
-
+        <div class="item-action">
+            <form class="delete-item" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        <div class="item-action">
+            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/edit" class="btn btn-warning">Edit</a>
+        </div>
+        <% include ../partials/recommendDropdown %>
+    
         <div class="container">
             <h2>Description</h2>
             <div>

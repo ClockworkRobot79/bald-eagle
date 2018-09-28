@@ -5,6 +5,7 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
 const { filterUserOwned } = require('../utils/misc');
 const List = require('../models/list');
+const Recommendation = require('../models/recommendation');
 const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
 
@@ -12,9 +13,17 @@ const User = require('../models/user');
 router.get('/', (req, res) => {
     Restaurant.find({}, (err, restaurants) => {
         if (err) {
-            console.error(`Error: ${err.message}`);
+            console.error(`Error getting restaurants: ${err.message}`);
+            res.redirect('/');
         } else {
-            res.render('restaurants/index', {restaurants});
+            Recommendation.find({ for: req.user, menuItem: undefined }).populate('restaurant').exec((err, recommendations) => {
+                if (err) {
+                    console.error(`Error getting restaurants: ${err.message}`);
+                    res.redirect('/');
+                } else {
+                    res.render('restaurants/index', { restaurants, recommendations });
+                }
+            });
         }
     });
 });
@@ -76,10 +85,13 @@ router.get('/:restaurantID', (req, res) => {
                     console.error(`Error fetching lists: ${err.message}`);
                     res.redirect(`/restaurants`);
                 } else {
-                    const { _id } = (res.locals.user || {});
-                    User.findById(_id).populate('friends').exec((err, user) => {
-                        const friends = (user || {}).friends || [];
-                        res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, friends });
+                    Recommendation.find({ for: req.user, restaurant: req.params.restaurantID }).where('menuItem').ne(null).populate('menuItem').exec((err, recommendations) => {
+                        if (err) {
+                            console.error(`Error fetching recommendations: ${err.message}`);
+                            res.redirect(`/restaurants`);
+                        } else {
+                            res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, recommendations });
+                        }
                     });
                 }
             });

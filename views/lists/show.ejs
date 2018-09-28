@@ -11,12 +11,12 @@
     <div class="item-action">
         <a href="/lists/<%= list._id %>/edit" class="btn btn-warning">Edit</a>
     </div>
-    <% if (friends.length) { %>
+    <% if (user.friends.length) { %>
         <div class="dropdown item-action">
             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Share with...</button>
             <div class="dropdown-menu" id="friendDropdown">
                 <input type="text" id="friendInput" onkeyup="filterFunction('friendInput', 'friendDropdown')" placeholder="Search for friends...">
-                <% friends.forEach((friend) => { %>
+                <% user.friends.forEach((friend) => { %>
                     <a class="dropdown-item" href="/lists/<%= list._id %>/addOwner/<%= friend._id %>"><%= friend.getDisplayName() %></a>
                 <% }); %>
             </div>

@@ -10,4 +10,21 @@
         <% } %>
     </ul>
 
+    <% if (recommendations.length) { %>
+        <h2>Latest Recommendations</h2>
+        <ul>
+            <% recommendations.slice(0, numRecs).forEach((recommendation) => { %>
+                <%
+                    let linkName = recommendation.restaurant.name;
+                    let menuItemPart = ``;
+                    if (typeof recommendation.menuItem !== 'undefined' && recommendation.menuItem) {
+                        menuItemPart += `/menuItems/${recommendation.menuItem._id}`;
+                        linkName = recommendation.menuItem.name;
+                    }
+                %>
+                <li><a href="/restaurants/<%= recommendation.restaurant._id %><%= menuItemPart %>"><%= linkName %></a></li>
+            <% }); %>
+        </ul>
+    <% } %>
+
 <% include ./partials/footer %>

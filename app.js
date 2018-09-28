@@ -57,11 +57,19 @@ seedData();
 // this will inject the signed in user to all pages
 // so we can reference it on any page
 app.use((req, res, next) => {
-    res.locals.user = req.user;
     res.locals.error = req.flash('error');
     res.locals.warning = req.flash('warning');
     res.locals.success = req.flash('success');
-    next();
+
+    // pull the user from the DB so we can populate fields properly
+    User.findById((req.user || {})._id).populate('friends').exec((err, user) => {
+        if (err) {
+            req.flash(`error`, `Failed to populate user: ${err.message}`);
+        } else {
+            res.locals.user = user;
+        }
+        next();
+    });
 });
 
 // wire up all the sub-routes
