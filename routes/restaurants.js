@@ -114,6 +114,10 @@ router.put('/:restaurantID', canEditRestaurant, (req, res) => {
     //   Restaurant.findByIdAndUpdate(req.params.restaurantID, req.body.restaurant, (err, updatedCampground) => {
     const { restaurant } = res.locals;
     if (restaurant) {
+        req.body.restaurant.location = {
+            address: req.body.restaurant.address,
+        };
+        delete req.body.restaurant.address;
         Object.assign(restaurant, req.body.restaurant);
         restaurant.save();
         res.redirect(`/restaurants/${restaurant._id}`);

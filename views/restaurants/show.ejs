@@ -30,13 +30,20 @@
     <div class="container">
         <% if (restaurant.website) { %>
             <h2>Website</h2>
-            <div>
+            <div class="container">
                 <a href="<%= restaurant.website %>" target="_blank"><%= restaurant.website %></a>
             </div>
         <% } %>
 
+        <% if (restaurant.location && restaurant.location.address) { %>
+            <h2>Address</h2>
+            <div class="container">
+                <%= restaurant.location.address %>
+            </div>
+        <% } %>
+
         <h2>Description</h2>
-        <div>
+        <div class="container">
             <%= restaurant.description %>
         </div>
 
@@ -56,36 +63,36 @@
                 <a href="/restaurants/<%= restaurant._id %>/menuItems/new" class="btn btn-xs btn-primary">+</a>
             <% } %>
         </h2>
-        <% 
-        if (restaurant.menuItems.length) {
-        %>
-            <div class="row">
-                <div class="col-lg-4">
-                    <h4>Name</h4>
-                </div>
-                <div class="col-lg-2">
-                    <h4>Rating</h4>
-                </div>
-                <div class="col-lg-6">
-                    <h4>Comment</h4>
-                </div>
-            </div>
-            <% restaurant.menuItems.forEach((menuItem) => { %>
+        <% if (restaurant.menuItems.length) { %>
+            <div class="container">
                 <div class="row">
                     <div class="col-lg-4">
-                        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
+                        <h4>Name</h4>
                     </div>
-                    <div class="col-lg-1">
-                        <%- averageRating(menuItem.ratings, user) %>
-                    </div>
-                    <div class="col-lg-1">
-                        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
+                    <div class="col-lg-2">
+                        <h4>Rating</h4>
                     </div>
                     <div class="col-lg-6">
-                        <%= menuItem.description %>
+                        <h4>Comment</h4>
                     </div>
                 </div>
-            <% }); %>
+                <% restaurant.menuItems.forEach((menuItem) => { %>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
+                        </div>
+                        <div class="col-lg-1">
+                            <%- averageRating(menuItem.ratings, user) %>
+                        </div>
+                        <div class="col-lg-1">
+                            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
+                        </div>
+                        <div class="col-lg-6">
+                            <%= menuItem.description %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
         <% } %>
     </div>
 

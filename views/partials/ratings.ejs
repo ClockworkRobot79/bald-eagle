@@ -4,31 +4,31 @@
         <a href="<%= newRatingLink %>" class="btn btn-xs btn-primary">+</a>
     <% } %>
 </h2>
-<%
-if (ratings.length) {
-%>
-    <div class="row">
-        <div class="col-lg-2">
-            <h4>Date</h4>
-        </div>
-        <div class="col-lg-3">
-            <h4>Rating</h4>
-        </div>
-        <div class="col-lg-7">
-            <h4>Comment</h4>
-        </div>
-    </div>
-    <% ratings.forEach((rating) => { %>
+<% if (ratings.length) { %>
+    <div class="container">
         <div class="row">
             <div class="col-lg-2">
-                <%- new Date(rating.date).toLocaleDateString() %>
+                <h4>Date</h4>
             </div>
             <div class="col-lg-3">
-                <%= rating.rating %>
+                <h4>Rating</h4>
             </div>
             <div class="col-lg-7">
-                <%= rating.comment %>
+                <h4>Comment</h4>
             </div>
         </div>
-    <% }); %>
+        <% ratings.forEach((rating) => { %>
+            <div class="row">
+                <div class="col-lg-2">
+                    <%- new Date(rating.date).toLocaleDateString() %>
+                </div>
+                <div class="col-lg-3">
+                    <%= rating.rating %>
+                </div>
+                <div class="col-lg-7">
+                    <%= rating.comment %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
 <% } %>
