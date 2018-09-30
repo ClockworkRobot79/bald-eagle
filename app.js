@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // fall back on a local DB if one isn't provided through an env variable
 const dbURL = process.env.DATABASEURL || 'mongodb://localhost/OrderEnvy';
-mongoose.connect(dbURL); // add ':27017' to the address if it needs a port
+mongoose.connect(dbURL, { useNewUrlParser: true }); // add ':27017' to the address if it needs a port
 
 // maybe populate the DB with some starting data
 seedData();
