@@ -7,12 +7,12 @@ const User = require('../models/user');
 
 // 'index' route
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('users/show');
+    res.redirect(`/users/${res.locals.user._id}`);
 });
 
 // 'new' route
 router.get('/new', isLoggedIn, (req, res) => {
-    res.redirect(`/users/${res.locals.user._id}`);
+    res.render('friends/new');
 });
 
 function clean(obj) {
