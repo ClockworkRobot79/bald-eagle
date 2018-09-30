@@ -8,9 +8,17 @@
     </script>
 
     <div>
-        <h1 class="page-header">
-            <%= user.username %>
-        </h1>
+        <div class="page-header">
+            <h2>
+                First Name: <%= user.firstName %>
+            </h2>
+            <h2>
+                Last Name: <%= user.lastName %>
+            </h2>
+            <h2>
+                Email: <%= user.email %>
+            </h2>
+        </div>
         <div class="item-action">
             <form class="delete-item" action="/users/<%= user._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete</button>
@@ -20,15 +28,15 @@
             <a href="/users/<%= user._id %>/edit" class="btn btn-warning">Edit</a>
         </div>
     
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2 class="page-header">Friends</h2>
-                </div>
-                <div class="col-lg-6 float-right">
-                    <a href="/users/<%= user._id %>/friends/new" class="btn btn-primary">Add Friend</a>
-                </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="page-header">Friends</h2>
             </div>
+            <div class="col-lg-6 float-right">
+                <a href="/users/<%= user._id %>/friends/new" class="btn btn-primary">Add Friend</a>
+            </div>
+        </div>
+        <div class="container">
             <div>
                 <% user.friends.forEach((friend) => { %>
                     <div class="row">

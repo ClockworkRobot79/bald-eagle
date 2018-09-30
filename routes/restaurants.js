@@ -53,7 +53,7 @@ router.post('/', isLoggedIn, (req, res) => {
         } else {
             console.log('Created: ' + createdRestaurant);
             req.flash(`success`, `Successfully created restaurant!`);
-            res.redirect('/restaurants');
+            res.redirect(`/restaurants/${createdRestaurant._id}`);
         }
     });
 });

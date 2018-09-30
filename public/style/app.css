@@ -19,6 +19,11 @@
     margin: 25px auto;
 }
 
+.new-item-form input {
+    margin: 7px auto;
+    width: 100%;
+}
+
 .page-header {
     display: inline-block;
 }

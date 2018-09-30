@@ -44,6 +44,7 @@ router.get('/:userID/edit', isLoggedIn, (req, res) => {
 router.put('/:userID', isLoggedIn, (req, res) => {
     if (req.user._id.equals(req.params.userID)) {
         const { user } = res.locals;
+        req.body.email = req.body.username;
         Object.assign(user, req.body.user);
         user.save();
         req.flash(`success`, `Updated user info`);

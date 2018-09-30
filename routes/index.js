@@ -24,8 +24,14 @@ router.get('/register', (req, res) => {
 
 // handle signing up a new user
 router.post('/register', (req, res) => {
-    const { username, password } = req.body;
-    User.register(new User({username}), password, (err, user) => {
+    const user = {
+        username: req.body.username, 
+        email: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        friends: [],
+    };
+    User.register(new User(user), req.body.password, (err, newUser) => {
         if (err) {
             console.error(err);
             req.flash(`error`, `Failed to register user: ${err.message}`);
@@ -33,10 +39,10 @@ router.post('/register', (req, res) => {
         }
 
         // new user has been created
-        passport.authenticate('local')(req, res, () => {
-            req.flash(`success`, `Welcome to Order Envy, enjoy your meal ${user.username}`);
-            res.redirect('/restaurants');
-        });
+        passport.authenticate('local', {
+            successRedirect: '/restaurants',
+            failureRedirect: '/register',
+        })(req, res, () => {});
     });
 });
 
