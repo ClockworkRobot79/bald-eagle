@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-    <a href="/users/<%= user._id %>/friends">Back</a>
+    <a href="/users/<%= user._id %>">Back</a>
 
     <h2>Recent ratings from <%= friendName %></h2>
 
@@ -13,14 +13,14 @@
 
         <div class="row">
             <div class="col-lg-2"><h4>Date</h4></div>
-            <div class="col-lg-1"><h4>Rating</h4></div>
+            <div class="col-lg-2"><h4>Rating</h4></div>
             <div class="col-lg-3"><h4>Restaurant / Item</h4></div>
-            <div class="col-lg-6"><h4>Comment</h4></div>
+            <div class="col-lg-5"><h4>Comment</h4></div>
         </div>
         <% recent.forEach((info) => { %>
             <div class="row">
                 <div class="col-lg-2"><%= new Date(info.rating.date).toLocaleDateString() %></div>
-                <div class="col-lg-1"><%= info.rating.rating %></div>
+                <div class="col-lg-2"><%= info.rating.rating %></div>
                 <div class="col-lg-3">
                     <% if (info.restaurant) { %>
                         <% if (info.menuItem) { %>
@@ -34,7 +34,7 @@
                         <% } %>
                     <% } %>
                 </div>
-                <div class="col-lg-6"><%= info.rating.comment %></div>
+                <div class="col-lg-5"><%= info.rating.comment %></div>
             </div>
         <% }); %>
 

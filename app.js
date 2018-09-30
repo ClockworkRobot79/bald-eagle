@@ -20,6 +20,7 @@ const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
 const recommendationRoutes = require('./routes/recommendations');
 const restaurantRoutes = require('./routes/restaurants');
+const userRoutes = require('./routes/users');
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static("./lib"));
@@ -76,6 +77,7 @@ app.use((req, res, next) => {
 app.use('/', indexRoutes);
 app.use('/users/share/:friendID', recommendationRoutes);
 app.use('/users/:userID/friends', friendRoutes);
+app.use('/users', userRoutes);
 app.use('/lists/:listID/', listElementRoutes);
 app.use('/lists', listRoutes);
 app.use('/restaurants', restaurantRoutes);

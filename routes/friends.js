@@ -7,12 +7,12 @@ const User = require('../models/user');
 
 // 'index' route
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('friends/index');
+    res.render('users/show');
 });
 
 // 'new' route
 router.get('/new', isLoggedIn, (req, res) => {
-    res.render('friends/new');
+    res.redirect(`/users/${res.locals.user._id}`);
 });
 
 function clean(obj) {
@@ -33,12 +33,14 @@ router.post('/', isLoggedIn, (req, res) => {
             req.flash(`error`, `Error adding friend: ${err.message}`);
         } else if (foundUsers.length === 1) {
             const foundUser = foundUsers[0];
-            res.locals.user.friends.push(foundUser);
-            res.locals.user.save();
+            if (res.locals.user.friends.addToSet(foundUser).length) {
+                res.locals.user.save();
+            }
 
             // add the current user to the friend's list as well
-            foundUser.friends.push(res.locals.user);
-            foundUser.save();
+            if (foundUser.friends.addToSet(res.locals.user)) {
+                foundUser.save();
+            }
 
             console.log('Added: ' + foundUser);
             req.flash(`success`, `Successfully added friend!`);
@@ -47,7 +49,7 @@ router.post('/', isLoggedIn, (req, res) => {
         }
 
         // succeed or fail, send them back to the friend index page
-        res.redirect(`/users/${res.locals.user._id}/friends`);
+        res.redirect(`/users/${res.locals.user._id}`);
     });
 });
 
@@ -127,13 +129,13 @@ router.get('/:friendID', isLoggedIn, (req, res) => {
 // 'edit' route
 router.get('/:friendID/edit', isLoggedIn, (req, res) => {
     // doesn't make sense to edit your friends at this point
-    res.redirect(`/users/${res.locals.user._id}/friends`);
+    res.redirect(`/users/${res.locals.user._id}`);
 });
 
 // 'update' route
 router.put('/:friendID', isLoggedIn, (req, res) => {
     // doesn't make sense to edit your friends at this point
-    res.redirect(`/users/${res.locals.user._id}/friends`);
+    res.redirect(`/users/${res.locals.user._id}`);
 });
 
 // 'delete' route
@@ -141,6 +143,7 @@ router.delete('/:friendID', isLoggedIn, (req, res) => {
     const { user } = res.locals;
     user.friends = user.friends.filter((friend) => { return !friend._id.equals(req.params.friendID); });
     user.save();
+    res.redirect('back');
 });
 
 module.exports = router;
