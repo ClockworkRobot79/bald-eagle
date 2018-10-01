@@ -19,8 +19,12 @@
     margin: 25px auto;
 }
 
-.new-item-form input {
+.new-item-form .form-inline .form-group input {
     margin: 7px auto;
+    width: 100%;
+}
+
+.new-item-form div {
     width: 100%;
 }
 

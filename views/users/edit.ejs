@@ -1,7 +1,5 @@
 <% include ../partials/header %>
 
-    <a href="javascript:history.back()">Back</a>
-
     <div style="text-align:center">
         <h1>Edit account</h1>
     </div>
@@ -23,48 +21,27 @@
 
     <div class="new-item-form">
         <form class="form-inline" name="editForm" action="/users/<%= user._id %>?_method=PUT" method="POST" onsubmit="return validateForm()">
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="text" name="user[username]" placeholder="Email" value="<%= user.username %>">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="user[username]" placeholder="Email" value="<%= user.username %>">
             </div>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="text" name="user[firstName]" placeholder="First Name" value="<%= user.firstName %>">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="user[firstName]" placeholder="First Name" value="<%= user.firstName %>">
             </div>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="text" name="user[lastName]" placeholder="Last Name" value="<%= user.lastName %>">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="user[lastName]" placeholder="Last Name" value="<%= user.lastName %>">
             </div>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="password" name="oldPassword" placeholder="Old Password">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="oldPassword" placeholder="Old Password">
             </div>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="password" name="user[password]" placeholder="New Password">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="user[password]" placeholder="New Password">
             </div>
-            <div class="form-group row">
-                <div class="col-lg-1"></div>
-                <div>
-                    <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm Password">
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm Password">
             </div>
 
-            <a href="javascript:history.back()" class="btn btn-lg btn-primary btn-block">Cancel</a>
-            <button class="btn btn-lg btn-primary btn-block">Save</button>
+            <% include ../partials/formButtons %>
         </form>
-
-        <a href="/">Back</a>
     </div>
 
 <% include ../partials/footer %>
