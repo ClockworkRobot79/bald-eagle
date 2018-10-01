@@ -39,6 +39,7 @@ router.post('/', isLoggedIn, (req, res) => {
         name: req.body.name,
         description: req.body.description,
         website: req.body.website,
+        phone: req.body.phone,
         location: {
             address: req.body.address,
             // lat: Number,  //* TODO: figure out how to pull info from phone/browser

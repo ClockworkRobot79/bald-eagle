@@ -35,6 +35,13 @@
             </div>
         <% } %>
 
+        <% if (restaurant.phone) { %>
+            <h2>Phone</h2>
+            <div class="container">
+                <%= restaurant.phone %>
+            </div>
+        <% } %>
+
         <% if (restaurant.location && restaurant.location.address) { %>
             <h2>Address</h2>
             <div class="container">
