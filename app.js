@@ -89,6 +89,7 @@ app.use('/restaurants/:restaurantID/ratings', ratingRoutes);
 app.use('/restaurants/:restaurantID/menuItems/:menuItemID/ratings', ratingRoutes);
 
 const PORT = process.env.PORT || 1979;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
 });
+module.exports = server;
