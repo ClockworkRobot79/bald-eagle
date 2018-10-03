@@ -6,14 +6,17 @@
     <h1 class="page-header">
         <%= restaurant.name %>
     </h1>
-    <div class="item-action">
-        <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Delete</button>
-        </form>
-    </div>
-    <div class="item-action">
-        <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-warning">Edit</a>
-    </div>
+    <% if (user) { %>
+        <div class="item-action">
+            <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        <div class="item-action">
+            <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-warning">Edit</a>
+        </div>
+    <% } %>
+
     <% if (lists.length) { %>
         <div class="dropdown item-action">
             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Add to List</button>
@@ -26,6 +29,12 @@
         </div>
     <% } %>
     <% include ../partials/recommendDropdown %>
+
+    <% if (user) { %>
+        <div>
+            <a href="/restaurants/<%= restaurant._id %>/checkin" class="btn btn-warning">Checkin</a>
+        </div>
+    <% } %>
 
     <div class="container">
         <% if (restaurant.website) { %>
@@ -76,11 +85,13 @@
                     <div class="col-lg-4">
                         <h4>Name</h4>
                     </div>
-                    <div class="col-lg-2">
-                        <h4>Rating</h4>
-                    </div>
+                    <% if (user) { %>
+                        <div class="col-lg-2">
+                            <h4>Rating</h4>
+                        </div>
+                    <% } %>
                     <div class="col-lg-6">
-                        <h4>Comment</h4>
+                        <h4>Description</h4>
                     </div>
                 </div>
                 <% restaurant.menuItems.forEach((menuItem) => { %>
@@ -88,12 +99,14 @@
                         <div class="col-lg-4">
                             <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
                         </div>
-                        <div class="col-lg-1">
-                            <%- averageRating(menuItem.ratings, user) %>
-                        </div>
-                        <div class="col-lg-1">
-                            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
-                        </div>
+                        <% if (user) { %>
+                            <div class="col-lg-1">
+                                <%- averageRating(menuItem.ratings, user) %>
+                            </div>
+                            <div class="col-lg-1">
+                                <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
+                            </div>
+                        <% } %>
                         <div class="col-lg-6">
                             <%= menuItem.description %>
                         </div>

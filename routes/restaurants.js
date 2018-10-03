@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
@@ -7,7 +7,6 @@ const { filterUserOwned } = require('../utils/misc');
 const List = require('../models/list');
 const Recommendation = require('../models/recommendation');
 const Restaurant = require('../models/restaurant');
-const User = require('../models/user');
 
 // 'index' route
 router.get('/', (req, res) => {

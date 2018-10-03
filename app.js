@@ -20,6 +20,7 @@ const menuItemRoutes = require('./routes/menuItems');
 const ratingRoutes = require('./routes/ratings');
 const recommendationRoutes = require('./routes/recommendations');
 const restaurantRoutes = require('./routes/restaurants');
+const restaurantCheckinRoutes = require('./routes/restaurantCheckin');
 const userRoutes = require('./routes/users');
 
 app.use(express.static(__dirname + "/public"));
@@ -81,6 +82,7 @@ app.use('/users', userRoutes);
 app.use('/lists/:listID/', listElementRoutes);
 app.use('/lists', listRoutes);
 app.use('/restaurants', restaurantRoutes);
+app.use('/restaurants/:restaurantID', restaurantCheckinRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
 
 // these endpoints share the same route handler because the logic is nearly identical
