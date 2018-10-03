@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "debug": "nodemon --inspect app.js",
-    "test": "jest"
+    "test": "jest",
+    "publish": "git push heroku master"
   },
   "author": "Eric Arnold",
   "license": "ISC",
