@@ -53,7 +53,7 @@ router.post('/', isLoggedIn, cacheRestaurant, (req, res) => {
 
 // 'show' route
 router.get('/:menuItemID', cacheRestaurant, (req, res) => {
-    MenuItem.findById(req.params.menuItemID).populate('ratings').exec((err, menuItem) => {
+    MenuItem.findById(req.params.menuItemID).populate({path: 'ratings', options: {sort: {'updatedAt': -1}}}).exec((err, menuItem) => {
         if (err) {
             console.error(`Error: ${err.message}`);
         } else {
