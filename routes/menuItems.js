@@ -7,6 +7,7 @@ const { canEditMenuItem } = require('../middleware/menuItem');
 const { filterUserOwned, limitText } = require('../utils/misc');
 
 const MenuItem = require('../models/menuItem');
+const Note = require('../models/note');
 
 // 'index' route
 // no reason to view all menuItems on their own, redirect to restaurant index page
@@ -56,9 +57,17 @@ router.get('/:menuItemID', cacheRestaurant, (req, res) => {
     MenuItem.findById(req.params.menuItemID).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, menuItem) => {
         if (err) {
             console.error(`Error: ${err.message}`);
+            return res.redirect(`/restaurants`);
         } else {
-            const { restaurant } = res.locals;
-            res.render('menuItems/show', { menuItem, restaurant, filterUserOwned, limitText });
+            Note.findOne({ about: menuItem, user: res.locals.user }, (err, note) => {
+                if (err) {
+                    console.error(`Error fetching note: ${err.message}`);
+                    return res.redirect(`/restaurants`);
+                } else {
+                    const { restaurant } = res.locals;
+                    res.render('menuItems/show', { menuItem, restaurant, filterUserOwned, note, limitText });
+                }
+            });
         }
     });
 });

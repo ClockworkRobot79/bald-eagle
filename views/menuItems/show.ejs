@@ -17,6 +17,16 @@
         <% include ../partials/recommendDropdown %>
     
         <div class="container">
+            <% if (user) { %>
+                <h2>Notes</h2>
+                <div class="note-container">
+                    <form class="float-left" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
+                        <textarea name="note[body]" cols="50" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
+                        <button class="btn btn-primary btn-block">Save</button>
+                    </form>
+                </div>
+            <% } %>
+
             <h2>Description</h2>
             <div>
                 <%= menuItem.description %>

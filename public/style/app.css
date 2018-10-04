@@ -40,3 +40,7 @@
 .checkin-item {
     margin-bottom: 5px;
 }
+
+.note-container {
+    overflow: auto;
+}

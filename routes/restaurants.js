@@ -6,6 +6,7 @@ const { canEditRestaurant } = require('../middleware/restaurant');
 const { filterUserOwned, limitText } = require('../utils/misc');
 const List = require('../models/list');
 const Recommendation = require('../models/recommendation');
+const Note = require('../models/note');
 const Restaurant = require('../models/restaurant');
 
 // 'index' route
@@ -78,19 +79,26 @@ router.get('/:restaurantID', (req, res) => {
     Restaurant.findById(req.params.restaurantID).populate({ path: 'menuItems', populate: {path: 'ratings', options: {sort: {'createdAt': -1}}}}).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, restaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
-            res.redirect(`/restaurants`);
+            return res.redirect(`/restaurants`);
         } else {
-            List.find({users: res.locals.user}, (err, lists) => {
+            List.find({ users: res.locals.user }, (err, lists) => {
                 if (err) {
                     console.error(`Error fetching lists: ${err.message}`);
-                    res.redirect(`/restaurants`);
+                    return res.redirect(`/restaurants`);
                 } else {
                     Recommendation.find({ for: req.user, restaurant: req.params.restaurantID }).where('menuItem').ne(null).populate('menuItem').exec((err, recommendations) => {
                         if (err) {
                             console.error(`Error fetching recommendations: ${err.message}`);
-                            res.redirect(`/restaurants`);
+                            return res.redirect(`/restaurants`);
                         } else {
-                            res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, recommendations, limitText });
+                            Note.findOne({ about: restaurant, user: res.locals.user }, (err, note) => {
+                                if (err) {
+                                    console.error(`Error fetching note: ${err.message}`);
+                                    return res.redirect(`/restaurants`);
+                                } else {
+                                    res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, recommendations, note, limitText });
+                                }
+                            });
                         }
                     });
                 }

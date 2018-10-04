@@ -17,6 +17,7 @@ const indexRoutes = require('./routes/index');
 const listRoutes = require('./routes/lists');
 const listElementRoutes = require('./routes/listElements');
 const menuItemRoutes = require('./routes/menuItems');
+const noteRoutes = require('./routes/notes');
 const ratingRoutes = require('./routes/ratings');
 const recommendationRoutes = require('./routes/recommendations');
 const restaurantRoutes = require('./routes/restaurants');
@@ -89,6 +90,8 @@ app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
 // there are slight variations if `menuItemID` is present in the request URL
 app.use('/restaurants/:restaurantID/ratings', ratingRoutes);
 app.use('/restaurants/:restaurantID/menuItems/:menuItemID/ratings', ratingRoutes);
+app.use('/restaurants/:restaurantID/notes', noteRoutes);
+app.use('/restaurants/:restaurantID/menuItems/:menuItemID/notes', noteRoutes);
 
 const PORT = process.env.PORT || 1979;
 const server = app.listen(PORT, () => {
