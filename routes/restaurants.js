@@ -3,7 +3,7 @@ const router = express.Router({mergeParams: true});
 
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
-const { filterUserOwned } = require('../utils/misc');
+const { filterUserOwned, limitText } = require('../utils/misc');
 const List = require('../models/list');
 const Recommendation = require('../models/recommendation');
 const Restaurant = require('../models/restaurant');
@@ -90,7 +90,7 @@ router.get('/:restaurantID', (req, res) => {
                             console.error(`Error fetching recommendations: ${err.message}`);
                             res.redirect(`/restaurants`);
                         } else {
-                            res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, recommendations });
+                            res.render('restaurants/show', { restaurant, averageRating, filterUserOwned, lists, recommendations, limitText });
                         }
                     });
                 }

@@ -23,4 +23,13 @@ module.exports = {
     filterUserOwned: (user, objs) => {
         return (user ? objs.filter((obj) => { return obj.user && user._id.equals(obj.user._id); }) : []);
     },
+
+    // clip the input text to the desired length
+    limitText: (txt, len) => {
+        if (txt && txt.length > len) {
+            return txt.slice(0, len) + `...`;
+        }
+    
+        return txt;
+    },
 }

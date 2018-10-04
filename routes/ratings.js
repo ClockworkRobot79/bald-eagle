@@ -60,9 +60,11 @@ router.post('/', isLoggedIn, cacheRestaurant, cacheMenuItem, (req, res) => {
 });
 
 // 'show' route
-// no reason to view a single rating, redirect to restaurant index page
-router.get('/:ratingID', (req, res) => {
-    res.redirect('/restaurants');
+router.get('/:ratingID', userOwnsRating, cacheRestaurant, cacheMenuItem, (req, res) => {
+    const { rating, restaurant, menuItem } = res.locals;
+    const restaurantRoute = (restaurant ? `/restaurants/${restaurant._id}` : ``);
+    const menuItemRoute = (menuItem ? `/menuItems/${menuItem._id}` : ``);
+    res.render('ratings/show', { rating, restaurant, restaurantRoute, menuItem, menuItemRoute, rating });
 });
 
 // 'edit' route
@@ -87,7 +89,7 @@ router.put('/:ratingID', userOwnsRating, cacheRestaurant, cacheMenuItem, (req, r
         rating.save();
 
         const route = _buildRedirectRoute(restaurant, menuItem);
-        res.redirect(route);
+        res.redirect(route + `/ratings/${rating._id}`);
     } else {
         req.flash(`error`, `Unknown error editing rating`);
         res.redirect(`/restaurants`);

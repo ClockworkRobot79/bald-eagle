@@ -64,7 +64,7 @@
         </div>
 
         <%
-        const newRatingLink = `/restaurants/${restaurant._id}/ratings/new`;
+        const baseRatingLink = `/restaurants/${restaurant._id}/ratings`;
         const ratings = filterUserOwned(user, restaurant.ratings); 
         %>
         <% include ../partials/ratings %>
@@ -108,7 +108,7 @@
                             </div>
                         <% } %>
                         <div class="col-lg-6">
-                            <%= menuItem.description %>
+                            <%= limitText(menuItem.description, 20) %>
                         </div>
                     </div>
                 <% }); %>

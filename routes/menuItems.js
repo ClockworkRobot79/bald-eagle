@@ -4,7 +4,7 @@ const router = express.Router({mergeParams: true});
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { cacheRestaurant } = require('../middleware/restaurant');
 const { canEditMenuItem } = require('../middleware/menuItem');
-const { filterUserOwned } = require('../utils/misc');
+const { filterUserOwned, limitText } = require('../utils/misc');
 
 const MenuItem = require('../models/menuItem');
 
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 router.get('/new', isLoggedIn, cacheRestaurant, (req, res) => {
     const { restaurant } = res.locals;
     if (restaurant) {
-        res.render('menuItems/new', {restaurant});
+        res.render('menuItems/new', { restaurant });
     } else {
         res.redirect('back');
     }
@@ -58,7 +58,7 @@ router.get('/:menuItemID', cacheRestaurant, (req, res) => {
             console.error(`Error: ${err.message}`);
         } else {
             const { restaurant } = res.locals;
-            res.render('menuItems/show', {menuItem, restaurant, filterUserOwned});
+            res.render('menuItems/show', { menuItem, restaurant, filterUserOwned, limitText });
         }
     });
 });
@@ -67,7 +67,7 @@ router.get('/:menuItemID', cacheRestaurant, (req, res) => {
 router.get('/:menuItemID/edit', canEditMenuItem, cacheRestaurant, (req, res) => {
     const { menuItem, restaurant } = res.locals;
     if (menuItem) {
-        res.render('menuItems/edit', {menuItem, restaurant});
+        res.render('menuItems/edit', { menuItem, restaurant });
     }
 });
 

@@ -23,7 +23,7 @@
             </div>
 
             <%
-            const newRatingLink = `/restaurants/${restaurant._id}/menuItems/${menuItem._id}/ratings/new`;
+            const baseRatingLink = `/restaurants/${restaurant._id}/menuItems/${menuItem._id}/ratings`;
             const ratings = filterUserOwned(user, menuItem.ratings); 
             %>
             <% include ../partials/ratings %>
