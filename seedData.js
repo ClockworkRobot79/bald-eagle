@@ -46,17 +46,14 @@ const defaultRatings = [
     {
         rating: 1,
         comment: `Tasted like old shoes`,
-        date: Date.now(),
     },
     {
         rating: 5,
         comment: `Best I've ever had`,
-        date: Date.now(),
     },
     {
         rating: 2,
         comment: `Gave me the runs`,
-        date: Date.now(),
     },
 ];
 

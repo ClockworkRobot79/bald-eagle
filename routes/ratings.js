@@ -31,7 +31,6 @@ router.post('/', isLoggedIn, cacheRestaurant, cacheMenuItem, (req, res) => {
     const newRating = {
         rating: req.body.rating,
         comment: req.body.comment,
-        date: Date.now(),
         user: res.locals.user,
     };
     

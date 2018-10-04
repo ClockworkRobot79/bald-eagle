@@ -105,7 +105,7 @@ router.get('/:friendID', isLoggedIn, (req, res) => {
 
                     // show most recent first
                     recent.sort((a, b) => {
-                        return (a.rating.date < b.rating.date);
+                        return (a.rating.createdAt < b.rating.createdAt);
                     });
 
                     // show them a couple at a time

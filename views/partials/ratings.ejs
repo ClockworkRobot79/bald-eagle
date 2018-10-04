@@ -20,7 +20,7 @@
         <% ratings.forEach((rating) => { %>
             <div class="row">
                 <div class="col-lg-2">
-                    <%- new Date(rating.date).toLocaleDateString() %>
+                    <%- new Date(rating.createdAt).toLocaleDateString() %>
                 </div>
                 <div class="col-lg-3">
                     <%= rating.rating %>

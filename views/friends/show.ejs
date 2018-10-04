@@ -19,7 +19,7 @@
         </div>
         <% recent.forEach((info) => { %>
             <div class="row">
-                <div class="col-lg-2"><%= new Date(info.rating.date).toLocaleDateString() %></div>
+                <div class="col-lg-2"><%= new Date(info.rating.createdAt).toLocaleDateString() %></div>
                 <div class="col-lg-2"><%= info.rating.rating %></div>
                 <div class="col-lg-3">
                     <% if (info.restaurant) { %>

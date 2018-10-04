@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const ratingSchema = new mongoose.Schema({
     rating: Number,
     comment: String,
-    date: Date,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

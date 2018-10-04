@@ -23,7 +23,6 @@ function createRating(restaurant, menuItem, rating, comment, user) {
     const newRating = {
         rating,
         comment,
-        date: Date.now(),
         user,
     };
     
