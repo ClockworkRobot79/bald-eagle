@@ -29,30 +29,28 @@
         </div>
     
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col">
                 <h2 class="page-header">Friends</h2>
             </div>
-            <div class="col-lg-6 float-right">
+            <div class="col">
                 <a href="/users/<%= user._id %>/friends/new" class="btn btn-primary">Add Friend</a>
             </div>
         </div>
         <div class="container">
-            <div>
-                <% user.friends.forEach((friend) => { %>
-                    <div class="row">
-                        <div class="col-lg-6 float-left">
-                            <a href="/users/<%= user._id %>/friends/<%= friend._id %>">
-                                <%= friend.getDisplayName() %>
-                            </a>
-                        </div>
-                        <div class="col-lg-6 float-right">
-                            <form class="delete-item" action="/users/<%= user._id %>/friends/<%= friend._id %>?_method=DELETE" method="POST" onsubmit="return deleteConfirm()">
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
+            <% user.friends.forEach((friend) => { %>
+                <div class="row">
+                    <div class="col">
+                        <a href="/users/<%= user._id %>/friends/<%= friend._id %>">
+                            <%= friend.getDisplayName() %>
+                        </a>
                     </div>
-                <% }); %>
-            </div>
+                    <div class="col">
+                            <form class="delete-item" action="/users/<%= user._id %>/friends/<%= friend._id %>?_method=DELETE" method="POST" onsubmit="return deleteConfirm()">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
         </div>
     </div>
 
