@@ -1,6 +1,6 @@
 <h2>
     <div class="row">
-        <div class="col-3">
+        <div class="col-9">
             Ratings
         </div>
         <div class="col-3">
@@ -13,29 +13,26 @@
 <% if (ratings.length) { %>
     <div class="container">
         <div class="row">
-            <div class="col-3">
-                <h4>Date</h4>
+            <!-- <div class="col-3">
+                <h5>Date</h5>
+            </div> -->
+            <div class="col-4">
+                <h5>Rating</h5>
             </div>
-            <div class="col-3">
-                <h4>Rating</h4>
-            </div>
-            <div class="col-6">
-                <h4>Comment</h4>
+            <div class="col-8">
+                <h5>Comment</h5>
             </div>
         </div>
         <% ratings.forEach((rating) => { %>
             <div class="row">
-                <div class="col-3">
+                <!-- <div class="col-3">
                     <%- new Date(rating.createdAt).toLocaleDateString() %>
+                </div> -->
+                <div class="col-4">
+                    <a class="btn btn-outline-primary float-right" href="<%= baseRatingLink %>/<%= rating._id %>"><%= rating.rating %></a>
                 </div>
-                <div class="col-3">
-                    <%= rating.rating %>
-                </div>
-                <div class="col-5">
+                <div class="col-8">
                     <%= limitText(rating.comment, 30) %>
-                </div>
-                <div class="col-1">
-                    <a class="btn btn-primary float-right" href="<%= baseRatingLink %>/<%= rating._id %>">View</a> 
                 </div>
             </div>
         <% }); %>

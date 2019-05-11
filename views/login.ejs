@@ -1,11 +1,25 @@
 <% include ./partials/header %>
 
-    <h1>Login Page</h1>
+    <div class="centered">
+        <h1>Login Page</h1>
 
-    <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="email" autofocus>
-        <input type="password" name="password" placeholder="password">
-        <button>Login</button>
-    </form>
+        <form class="new-item-form" action="/login" method="POST">
+            <div class="row form-group centered">
+                <div class="col-xs-8">
+                    <input class="form-control" type="text" name="username" placeholder="email" autofocus>
+                </div>
+            </div>
+            <div class="row form-group centered">
+                <div class="col-xs-8">
+                    <input class="form-control" type="password" name="password" placeholder="password">
+                </div>
+            </div>
+            <div class="row form-group centered">
+                <div class="col-xs-8">
+                    <button class="form-control btn btn-primary">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
 <% include ./partials/footer %>

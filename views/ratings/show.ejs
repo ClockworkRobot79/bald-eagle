@@ -3,14 +3,13 @@
     <a href="javascript:history.back()">Back</a>
 
     <div>
-        <h1 class="page-header">
+        <h2 class="page-header">
             Rating for 
             <% if (typeof menuItem !== 'undefined') { %>
-                <%= menuItem %>
-            <% } else { %>
-                <%= restaurant %>
+                <%= menuItem.name %> at <br>
             <% } %>
-        </h1>
+            <%= restaurant.name %>
+        </h2>
         <div class="item-action">
             <form class="delete-item" action="<%= restaurantRoute %><%= menuItemRoute %>/ratings/<%= rating._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete</button>

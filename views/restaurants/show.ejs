@@ -3,9 +3,9 @@
     <div>
         <a href="/restaurants">Back</a>
     </div>
-    <h1 class="page-header">
+    <h2 class="page-header">
         <%= restaurant.name %>
-    </h1>
+    </h2>
     <% if (user) { %>
         <div class="item-action">
             <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
@@ -36,12 +36,10 @@
                 <a href="/restaurants/<%= restaurant._id %>/checkin" class="btn btn-warning">Checkin</a>
             </div>
             <h2>Notes</h2>
-            <div class="note-container">
-                <form class="float-left" action="/restaurants/<%= restaurant._id %>/notes" method="POST">
-                    <textarea name="note[body]" cols="50" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
-                    <button class="btn btn-primary btn-block">Save</button>
-                </form>
-            </div>
+            <form class="new-item-form" action="/restaurants/<%= restaurant._id %>/notes" method="POST">
+                <textarea name="note[body]" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
+                <button class="btn btn-primary btn-block">Save</button>
+            </form>
         <% } %>
 
         <% if (restaurant.website) { %>
@@ -82,7 +80,7 @@
 
         <h2>
             <div class="row">
-                <div class="col-3">
+                <div class="col-9">
                     Menu Items
                 </div>
                 <div class="col-3">
@@ -93,39 +91,38 @@
             </div>
         </h2>
         <% if (restaurant.menuItems.length) { %>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h4>Name</h4>
+            <% restaurant.menuItems.forEach((menuItem) => { %>
+                <div class="container menu-item-container">
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>Name</h5>
+                        </div>
+                        <div class="col-9">
+                            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>" class="float-right"><%= menuItem.name %></a>
+                        </div>
                     </div>
                     <% if (user) { %>
-                        <div class="col-lg-3">
-                            <h4>Rating</h4>
+                        <div class="row">
+                            <div class="col-9">
+                                <h5 class="block-inline">Rating</h5>
+                            </div>
+                            <div class="col-3">
+                                <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary float-right"><%- averageRating(menuItem.ratings, user) %></a>
+                            </div>
                         </div>
                     <% } %>
-                    <div class="col-lg-6">
-                        <h4>Description</h4>
-                    </div>
+                    <% if (menuItem.description) { %>
+                        <div class="row">
+                            <div class="col-5">
+                                <h5>Description</h5>
+                            </div>
+                            <div class="col-7">
+                                <%= limitText(menuItem.description, 20) %>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
-                <% restaurant.menuItems.forEach((menuItem) => { %>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>"><%= menuItem.name %></a>
-                        </div>
-                        <% if (user) { %>
-                            <div class="col-lg-1">
-                                <%- averageRating(menuItem.ratings, user) %>
-                            </div>
-                            <div class="col-lg-2">
-                                <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/ratings/new" class="btn btn-xs btn-primary">+</a>
-                            </div>
-                        <% } %>
-                        <div class="col-lg-6">
-                            <%= limitText(menuItem.description, 20) %>
-                        </div>
-                    </div>
-                <% }); %>
-            </div>
+            <% }); %>
         <% } %>
     </div>
 

@@ -71,7 +71,7 @@ function averageRating(ratings, user) {
         }
     }
 
-    return (count ? total / count : '--');
+    return (count ? total / count : '+');
 }
 
 // 'show' route

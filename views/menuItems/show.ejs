@@ -19,12 +19,10 @@
         <div class="container">
             <% if (user) { %>
                 <h2>Notes</h2>
-                <div class="note-container">
-                    <form class="float-left" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
-                        <textarea name="note[body]" cols="50" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
-                        <button class="btn btn-primary btn-block">Save</button>
-                    </form>
-                </div>
+                <form class="new-item-form" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
+                    <textarea name="note[body]" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
+                    <button class="btn btn-primary btn-block">Save</button>
+                </form>
             <% } %>
 
             <h2>Description</h2>

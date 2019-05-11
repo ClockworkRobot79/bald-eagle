@@ -44,7 +44,7 @@ router.post('/', isLoggedIn, cacheRestaurant, (req, res) => {
             if (restaurant) {
                 restaurant.menuItems.push(createdMenuItem);
                 restaurant.save();
-                return res.redirect(`/restaurants/${restaurant._id}`);
+                return res.redirect(`/restaurants/${restaurant._id}/menuItems/${createdMenuItem._id}/ratings/new`);
             }
         }
 

@@ -1,26 +1,27 @@
 <% include ../partials/header %>
 
-    <h1>This is the restaurant index page</h1>
+    <div class="centered">
+        <h1>Restaurants</h1>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <ul>
-            <% restaurants.forEach((restaurant) => { %>
-                <li>
-                    <a href="/restaurants/<%= restaurant._id %>">
+        <% restaurants.forEach((restaurant, idx) => { %>
+            <div class="row new-item-form">
+                <div class="col-9 centered">
+                    <a class="btn <%= (idx % 2 ? 'btn-outline-secondary' : 'btn-outline-primary') %>" href="/restaurants/<%= restaurant._id %>">
                         <%= restaurant.name %>
                     </a>
-                </li>
-            <% }); %>
-            </ul>
+                </div>
+            </div>
+        <% }); %>
 
-            <% if (user) { %>
-                <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
-            <% } %>
-        </div>
-        <div class="col-lg-6">
-            <% include ../partials/recommendList %>
-        </div>
+        <% if (user) { %>
+            <div class="row new-item-form">
+                <div class="col-9 centered">
+                    <a href="/restaurants/new" class="btn btn-lg btn-primary">Add Restaurant</a>
+                </div>
+            </div>
+        <% } %>
+
+        <% include ../partials/recommendList %>
     </div>
 
 <% include ../partials/footer %>
