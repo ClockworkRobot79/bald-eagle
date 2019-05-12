@@ -1,8 +1,8 @@
 <% include ../partials/header %>
 
-    <h1 class="page-header">
+    <div class="page-header">
         <%= list.name %>
-    </h1>
+    </div>
     <div class="item-action">
         <form class="delete-item" action="/lists/<%= list._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger">Delete</button>

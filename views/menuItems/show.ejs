@@ -1,41 +1,61 @@
 <% include ../partials/header %>
 
-    <a href="/restaurants/<%= restaurant._id %>">Back</a>
+    <div class="page-header">
+        <%= menuItem.name %>
+    </div>
 
-    <div>
-        <h1 class="page-header">
-            <%= menuItem.name %>
-        </h1>
-        <div class="item-action">
-            <form class="delete-item" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-danger">Delete</button>
+    <div class="row">
+        <div class="col-2">
+            <a class="btn btn-outline-primary bg-light" href="/restaurants/<%= restaurant._id %>"><</a>
+        </div>
+        <% if (user) { %>
+            <div class="col">
+                <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-3">
+                        <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/edit" class="btn btn-warning">
+                            Edit
+                        </a>
+                    </div>
+                    <div class="col-4">
+                        <form class="delete-item"
+                            action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="container">
+        <% if (user) { %>
+            <% include ../partials/recommendDropdown %>
+
+            <hr class="spacer">
+
+            <h2>Notes</h2>
+            <form action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
+                <textarea name="note[body]" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
+                <button class="btn btn-primary btn-block">Save</button>
             </form>
-        </div>
-        <div class="item-action">
-            <a href="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/edit" class="btn btn-warning">Edit</a>
-        </div>
-        <% include ../partials/recommendDropdown %>
-    
-        <div class="container">
-            <% if (user) { %>
-                <h2>Notes</h2>
-                <form class="new-item-form" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
-                    <textarea name="note[body]" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
-                    <button class="btn btn-primary btn-block">Save</button>
-                </form>
-            <% } %>
+            
+            <hr class="spacer">
+        <% } %>
 
+        <% if (menuItem.description) { %>
             <h2>Description</h2>
             <div>
                 <%= menuItem.description %>
             </div>
+            <hr class="spacer">
+        <% } %>
 
-            <%
-            const baseRatingLink = `/restaurants/${restaurant._id}/menuItems/${menuItem._id}/ratings`;
-            const ratings = filterUserOwned(user, menuItem.ratings); 
-            %>
-            <% include ../partials/ratings %>
-        </div>
+        <%
+        const baseRatingLink = `/restaurants/${restaurant._id}/menuItems/${menuItem._id}/ratings`;
+        const ratings = filterUserOwned(user, menuItem.ratings); 
+        %>
+        <% include ../partials/ratings %>
     </div>
 
 <% include ../partials/footer %>

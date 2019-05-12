@@ -3,10 +3,10 @@
     <div class="centered">
         <h1>Restaurants</h1>
 
-        <% restaurants.forEach((restaurant, idx) => { %>
+        <% restaurants.forEach((restaurant) => { %>
             <div class="row new-item-form">
                 <div class="col-9 centered">
-                    <a class="btn <%= (idx % 2 ? 'btn-outline-secondary' : 'btn-outline-primary') %>" href="/restaurants/<%= restaurant._id %>">
+                    <a class="btn btn-outline-primary bg-light" href="/restaurants/<%= restaurant._id %>">
                         <%= restaurant.name %>
                     </a>
                 </div>

@@ -53,7 +53,7 @@ router.post('/', isLoggedIn, cacheRestaurant, cacheMenuItem, (req, res) => {
 
             console.log('Created: ' + createdRating);
             req.flash(`success`, `Successfully created rating!`);
-            const route = _buildRedirectRoute(restaurant, menuItem);
+            const route = _buildRedirectRoute(restaurant);
             res.redirect(route);
         }
     });

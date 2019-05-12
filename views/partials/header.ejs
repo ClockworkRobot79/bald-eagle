@@ -17,12 +17,17 @@
             </div>
             <ul class="nav nav-pills">
                 <% if (user) { %>
-                    <li class="nav-item nav-link">
-                        Welcome, <a href="/users/<%= user._id %>">
-                            <%= user.getDisplayName() %>
-                        </a>
+                    <li class="nav-item nav-link float-right">
+                        <div>
+                            Welcome, <a href="/users/<%= user._id %>">
+                                <%= user.getDisplayName() %>
+                            </a>
+                        </div>
+                        <div>
+                            <a class="float-right" href="/logout">log out</a>
+                        </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="/logout">log out</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="/logout">log out</a></li> -->
                 <% } else { %>
                     <li class="nav-item"><a class="nav-link" href="/login">login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/register">sign up</a></li>

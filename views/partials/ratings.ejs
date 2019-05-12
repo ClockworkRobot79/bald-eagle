@@ -5,36 +5,32 @@
         </div>
         <div class="col-3">
             <% if (user) { %>
-                <a href="<%= baseRatingLink %>/new" class="btn btn-xs btn-primary">+</a>
+                <a href="<%= baseRatingLink %>/new" class="btn btn-xs btn-outline-primary bg-light">+</a>
             <% } %>
         </div>
     </div>
 </h2>
 <% if (ratings.length) { %>
-    <div class="container">
+    <div class="menu-item-container">
         <div class="row">
-            <!-- <div class="col-3">
-                <h5>Date</h5>
-            </div> -->
-            <div class="col-4">
+            <div class="col-3">
                 <h5>Rating</h5>
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <h5>Comment</h5>
             </div>
         </div>
-        <% ratings.forEach((rating) => { %>
-            <div class="row">
-                <!-- <div class="col-3">
-                    <%- new Date(rating.createdAt).toLocaleDateString() %>
-                </div> -->
-                <div class="col-4">
-                    <a class="btn btn-outline-primary float-right" href="<%= baseRatingLink %>/<%= rating._id %>"><%= rating.rating %></a>
+        <div class="container">
+            <% ratings.forEach((rating) => { %>
+                <div class="row rating">
+                    <div class="col-3">
+                        <a class="btn btn-outline-primary bg-light float-right" href="<%= baseRatingLink %>/<%= rating._id %>"><%= rating.rating %></a>
+                    </div>
+                    <div class="col-9">
+                        <%= limitText(rating.comment, 30) %>
+                    </div>
                 </div>
-                <div class="col-8">
-                    <%= limitText(rating.comment, 30) %>
-                </div>
-            </div>
-        <% }); %>
+            <% }); %>
+        </div>
     </div>
 <% } %>

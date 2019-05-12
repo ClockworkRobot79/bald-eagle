@@ -11,7 +11,7 @@ const Restaurant = require('../models/restaurant');
 
 // 'index' route
 router.get('/', (req, res) => {
-    Restaurant.find({}, (err, restaurants) => {
+    Restaurant.find({}).sort('name').exec((err, restaurants) => {
         if (err) {
             console.error(`Error getting restaurants: ${err.message}`);
             res.redirect('/');
@@ -71,12 +71,12 @@ function averageRating(ratings, user) {
         }
     }
 
-    return (count ? total / count : '+');
+    return (count ? Math.round(total / count * 10) / 10 : '+');
 }
 
 // 'show' route
 router.get('/:restaurantID', (req, res) => {
-    Restaurant.findById(req.params.restaurantID).populate({ path: 'menuItems', populate: {path: 'ratings', options: {sort: {'createdAt': -1}}}}).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, restaurant) => {
+    Restaurant.findById(req.params.restaurantID).populate({path: 'menuItems', populate: {path: 'ratings', options: {sort: {'createdAt': -1}}}}).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, restaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
             return res.redirect(`/restaurants`);
