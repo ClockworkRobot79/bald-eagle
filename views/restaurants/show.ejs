@@ -1,43 +1,51 @@
 <% include ../partials/header %>
 
-    <div class="page-header">
-        <%= restaurant.name %>
-    </div>
     <div class="row">
-        <div class="col-2">
-            <a class="btn btn-outline-primary bg-light" href="/restaurants"><</a>
+        <div class="col-2 centered">
+            <a class="btn btn-outline-primary bg-light" href="/restaurants"><i class="fas fa-chevron-left"></i></a>
         </div>
-        <% if (user) { %>
-            <div class="col">
-                <div class="row">
-                    <div class="col-5">
-                        <a href="/restaurants/<%= restaurant._id %>/checkin" class="btn btn-success">Checkin</a>
-                    </div>
-                    <div class="col-3">
-                        <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-warning">Edit</a>
-                    </div>
-                    <div class="col-4">
-                        <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
-                </div>
+        <div class="col-10">
+            <div class="page-header">
+                <%= restaurant.name %>
             </div>
-        <% } %>
+        </div>
     </div>
 
-    <% if (lists.length) { %>
-        <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Add to List</button>
-            <div class="dropdown-menu" id="listDropdown">
-                <input type="text" id="listInput" onkeyup="filterFunction('listInput', 'listDropdown')" placeholder="Search for lists...">
-                <% lists.forEach((list) => { %>
-                    <a class="dropdown-item" href="/lists/<%= list._id %>/addRestaurant/<%= restaurant._id %>"><%= list.name %></a>
-                <% }); %>
+    <% if (user) { %>
+        <hr class="spacer">
+        <div class="row row-spacer">
+            <div class="col">
+                <a href="/restaurants/<%= restaurant._id %>/checkin" class="btn btn-primary"><i class="fas fa-utensils"></i></a>
+            </div>
+            <div class="col">
+                <a href="/restaurants/<%= restaurant._id %>/edit" class="btn btn-outline-secondary"><i class="fas fa-edit"></i></a>
+            </div>
+            <div class="col">
+                <form class="delete-item" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <% if (lists.length) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown">Add to List</button>
+                        <div class="dropdown-menu" id="listDropdown">
+                            <input type="text" id="listInput" onkeyup="filterFunction('listInput', 'listDropdown')" placeholder="Search for lists...">
+                            <% lists.forEach((list) => { %>
+                                <a class="dropdown-item" href="/lists/<%= list._id %>/addRestaurant/<%= restaurant._id %>"><%= list.name %></a>
+                            <% }); %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="col">
+                <% include ../partials/recommendDropdown %>
             </div>
         </div>
     <% } %>
-    <% include ../partials/recommendDropdown %>
 
     <div class="container">
         <hr class="spacer">
@@ -73,12 +81,13 @@
             </div>
         <% } %>
 
-        <h2>Description</h2>
-        <div class="container">
-            <%= restaurant.description %>
-        </div>
-
-        <hr class="spacer">
+        <% if (restaurant.description) { %>
+            <h2>Description</h2>
+            <div class="container">
+                <%= restaurant.description %>
+            </div>
+            <hr class="spacer">
+        <% } %>
 
         <%
         const baseRatingLink = `/restaurants/${restaurant._id}/ratings`;

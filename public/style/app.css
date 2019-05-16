@@ -20,6 +20,10 @@
     color: #f8f9fa
 }
 
+.row-spacer {
+    margin-bottom: 15px;
+}
+
 .new-item-form {
     width: 100%;
     margin: 25px auto;
@@ -40,7 +44,6 @@ form textarea {
 
 .page-header {
     display: inline-block;
-    text-align: center;
     width: 100%;
     font-size: 2rem;
     font-weight: 500;
@@ -52,8 +55,7 @@ form textarea {
 }
 
 .centered {
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     text-align: center;
 }
 

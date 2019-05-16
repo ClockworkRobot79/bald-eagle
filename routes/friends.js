@@ -44,6 +44,9 @@ router.post('/', isLoggedIn, (req, res) => {
 
             console.log('Added: ' + foundUser);
             req.flash(`success`, `Successfully added friend!`);
+        } else if (foundUsers.length === 0) {
+            req.flash(`error`, `Failed to find a user with those details, please try again`);
+            return res.redirect('back');
         } else {
             req.flash(`error`, `Found more than one user with those details, please be more specific`);
         }

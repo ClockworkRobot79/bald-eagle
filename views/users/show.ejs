@@ -7,7 +7,21 @@
     </script>
 
     <div class="page-header">
-        Account Info
+        <div class="row">
+            <div class="col-7">Account Info</div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <a href="/users/<%= user._id %>/edit" class="btn btn-outline-secondary"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="col">
+                        <form class="delete-item" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <h4>
         First Name: <%= user.firstName %>
@@ -19,18 +33,6 @@
         Email: <%= user.email %>
     </h4>
 
-    <div class="row">
-        <div class="col-5"></div>
-        <div class="col-3">
-            <a href="/users/<%= user._id %>/edit" class="btn btn-warning">Edit</a>
-        </div>
-        <div class="col-4">
-            <form class="delete-item" action="/users/<%= user._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-danger">Delete</button>
-            </form>
-        </div>
-    </div>
-
     <hr class="spacer">
 
     <h2>
@@ -39,26 +41,26 @@
                 Friends
             </div>
             <div class="col">
-                <a href="/users/<%= user._id %>/friends/new" class="btn btn-primary">+</a>
+                <a href="/users/<%= user._id %>/friends/new" class="btn btn-primary"><i class="fas fa-user-plus"></i></a>
             </div>
         </div>
     </h2>
 
-    <div class="container">
-        <% user.friends.forEach((friend) => { %>
-            <div class="row">
-                <div class="col">
+    <% user.friends.forEach((friend) => { %>
+        <div class="row">
+            <div class="col-9">
+                <div class="container">
                     <a href="/users/<%= user._id %>/friends/<%= friend._id %>">
-                        <%= friend.getDisplayName() %>
+                        <h4><%= friend.getDisplayName() %></h4>
                     </a>
                 </div>
-                <div class="col">
-                        <form class="delete-item" action="/users/<%= user._id %>/friends/<%= friend._id %>?_method=DELETE" method="POST" onsubmit="return deleteConfirm()">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
             </div>
-        <% }); %>
-    </div>
+            <div class="col-3">
+                    <form class="delete-item" action="/users/<%= user._id %>/friends/<%= friend._id %>?_method=DELETE" method="POST" onsubmit="return deleteConfirm()">
+                    <button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                </form>
+            </div>
+        </div>
+    <% }); %>
 
 <% include ../partials/footer %>
