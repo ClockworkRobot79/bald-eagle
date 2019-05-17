@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/new', isLoggedIn, cacheRestaurant, (req, res) => {
     const { restaurant } = res.locals;
     if (restaurant) {
-        res.render('menuItems/new', { restaurant });
+        res.render('menuItems/new', { MenuItem, restaurant });
     } else {
         res.redirect('back');
     }
@@ -27,12 +27,8 @@ router.get('/new', isLoggedIn, cacheRestaurant, (req, res) => {
 
 // 'create' route
 router.post('/', isLoggedIn, cacheRestaurant, (req, res) => {
-    const newMenuItem = {
-        name: req.body.name,
-        description: req.body.description,
-    };
-    
-    MenuItem.create(newMenuItem, (err, createdMenuItem) => {
+    const { menuItem } = req.body;
+    MenuItem.create(menuItem, (err, createdMenuItem) => {
         if (err) {
             console.error(`Error: ${err.message}`);
             req.flash(`error`, `Error creating menuItem: ${err.message}`);
@@ -76,7 +72,7 @@ router.get('/:menuItemID', cacheRestaurant, (req, res) => {
 router.get('/:menuItemID/edit', canEditMenuItem, cacheRestaurant, (req, res) => {
     const { menuItem, restaurant } = res.locals;
     if (menuItem) {
-        res.render('menuItems/edit', { menuItem, restaurant });
+        res.render('menuItems/edit', { MenuItem, menuItem, restaurant });
     }
 });
 

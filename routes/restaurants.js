@@ -76,7 +76,7 @@ function averageRating(ratings, user) {
 
 // 'show' route
 router.get('/:restaurantID', (req, res) => {
-    Restaurant.findById(req.params.restaurantID).populate({path: 'menuItems', populate: {path: 'ratings', options: {sort: {'createdAt': -1}}}}).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, restaurant) => {
+    Restaurant.findById(req.params.restaurantID).populate({path: 'menuItems', options: {sort: 'name'}, populate: {path: 'ratings', options: {sort: {'createdAt': -1}}}}).populate({path: 'ratings', options: {sort: {'createdAt': -1}}}).exec((err, restaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
             return res.redirect(`/restaurants`);

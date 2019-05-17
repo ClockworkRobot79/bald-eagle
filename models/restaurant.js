@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MenuItem = require('./menuItem');
 
 // schema setup
 const restaurantSchema = new mongoose.Schema({
@@ -27,5 +28,21 @@ const restaurantSchema = new mongoose.Schema({
 {
   timestamps: true
 });
+
+restaurantSchema.methods.getCategories = function getCategories() {
+    let categories = [];
+    if (this.menuItems.length) {
+        MenuItem.getCategories().forEach((category) => {
+            const menuItems = this.menuItems.filter(menuItem => menuItem.category === category);
+            if (menuItems.length) {
+                categories.push({
+                    label: category,
+                    menuItems,
+                });
+            }
+        });
+    }
+    return categories;
+};
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);
