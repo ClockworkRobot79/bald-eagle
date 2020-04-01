@@ -42,8 +42,8 @@ router.post('/', isLoggedIn, (req, res) => {
         phone: req.body.phone,
         location: {
             address: req.body.address,
-            // lat: Number,  //* TODO: figure out how to pull info from phone/browser
-            // long: Number, //*       or look it up from address
+            lat: req.body.lat,
+            long: req.body.long,
         },
     };
     
@@ -124,6 +124,8 @@ router.put('/:restaurantID', canEditRestaurant, (req, res) => {
     if (restaurant) {
         req.body.restaurant.location = {
             address: req.body.restaurant.address,
+            lat: req.body.restaurant.lat,
+            long: req.body.restaurant.long,
         };
         delete req.body.restaurant.address;
         Object.assign(restaurant, req.body.restaurant);
