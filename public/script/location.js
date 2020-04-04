@@ -1,4 +1,4 @@
-function findMe(source, key) {
+function findMe(source) {
     if (!navigator.geolocation) {
         console.warn(`Geolocation is not supported by your browser`);
         return;
@@ -9,13 +9,13 @@ function findMe(source, key) {
 
         if (source === 'form') {
             // set addr using reverse geocoding
-            const url = `http://www.mapquestapi.com/geocoding/v1/reverse?key=${key}&location=${latitude},${longitude}`;
+            const url = `/location/address?lat=${latitude}&long=${longitude}`;
             fetch(url).then(data => data.json()).then(res => {
                 try {
-                    const {street, adminArea5, adminArea3, postalCode} = res.results[0].locations[0];
+                    const {street, city, state, postalCode} = res;
                     const addrElem = document.getElementById('address');
-                    if (addrElem) {
-                        addrElem.value = `${street}, ${adminArea5} ${adminArea3} ${postalCode}`;
+                    if (addrElem && street && city && state && postalCode) {
+                        addrElem.value = `${street}, ${city} ${state} ${postalCode}`;
                     }
                 } catch (err) {
                     console.error(`Error getting address: ${err}`);
@@ -47,24 +47,42 @@ function findMe(source, key) {
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
-function validateForm(key) {
+function validateForm() {
+    // if the lat/long hidden fields aren't filled in, try to generate them from the address
     let latElem = document.getElementById('lat');
     let longElem = document.getElementById('long');
-    if (latElem.value === '' || longElem.value === '') {
+    if (isNaN(Number(latElem.value)) || isNaN(Number(longElem.value))) {
+        // if there is no address, don't bother trying to get the lat/long
         const address = encodeURIComponent(document.getElementById('address').value);
-        const url = `http://www.mapquestapi.com/geocoding/v1/address?key=${key}&location=${address}`;
+        if (!address) {
+            return true;
+        }
+
+        const url = `/location/latlong/${address}`;
         fetch(url).then(data => data.json()).then(res => {
             try {
-                const {lat, lng} = res.results[0].locations[0].latLng;
-                latElem.value = lat;
-                longElem.value = lng;
+                const {lat, lng} = res;
+                if (lat && lng) {
+                    latElem.value = lat;
+                    longElem.value = lng;
+                }
             } catch (err) {
                 console.error(`Error geocoding address: ${err}`);
             }
+
             document.getElementById('restaurant').submit();
         });
         return false;
     }
 
     return true;
+}
+
+function invalidateLatLong() {
+    try {
+        document.getElementById('lat').value = undefined;
+        document.getElementById('long').value = undefined;
+    } catch(err) {
+        console.error(`Failed to clear the lat/long fields: ${err}`);
+    }
 }

@@ -5,7 +5,7 @@
     </div>
 
     <div class="new-item-form">
-        <form id="restaurant" class="form-inline" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" onsubmit="return validateForm('<%= key %>')">
+        <form id="restaurant" class="form-inline" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
                 <input class="form-control" type="text" name="restaurant[name]" placeholder="Restaurant name" value="<%= restaurant.name %>" autofocus>
             </div>
@@ -19,7 +19,8 @@
                 <input class="form-control" type="text" name="restaurant[description]" placeholder="Description" value="<%= restaurant.description %>">
             </div>
             <div class="form-group">
-                <input id="address" class="form-control" type="text" name="restaurant[address]" placeholder="Address" value="<%= restaurant.location.address %>">
+                <input id="address" class="form-control" type="text" name="restaurant[address]" placeholder="Address" onchange="invalidateLatLong()"
+                    value="<%= restaurant.location.address %>">
             </div>
             <div class="form-group">
                 <input id="lat" class="form-control" type="hidden" name="restaurant[lat]" placeholder="Latitude"
@@ -30,7 +31,7 @@
                     value="<%= restaurant.location.long %>">
             </div>
             <div class="row-spacer">
-                <div id="findMe" class="btn btn-primary" onclick="findMe('form', '<%= key %>')">Find me</div>
+                <div id="findMe" class="btn btn-primary" onclick="findMe('form')">Find me</div>
             </div>
 
             <% include ../partials/formButtons %>

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const expressSession = require('express-session');
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -16,6 +17,7 @@ const friendRoutes = require('./routes/friends');
 const indexRoutes = require('./routes/index');
 const listRoutes = require('./routes/lists');
 const listElementRoutes = require('./routes/listElements');
+const locationRoutes = require('./routes/location');
 const menuItemRoutes = require('./routes/menuItems');
 const noteRoutes = require('./routes/notes');
 const ratingRoutes = require('./routes/ratings');
@@ -50,9 +52,8 @@ passport.deserializeUser(User.deserializeUser());
 // 'body-parse' takes form data and builds a JS object out of it that we can manipulate
 app.use(bodyParser.urlencoded({extended: true}));
 
-// fall back on a local DB if one isn't provided through an env variable
-const dbURL = process.env.DATABASEURL || 'mongodb://localhost/OrderEnvy';
-mongoose.connect(dbURL, { useNewUrlParser: true }); // add ':27017' to the address if it needs a port
+const {DATABASE_URL} = process.env;
+mongoose.connect(DATABASE_URL, { useNewUrlParser: true }); // add ':27017' to the address if it needs a port
 
 // maybe populate the DB with some starting data
 seedData();
@@ -82,6 +83,7 @@ app.use('/users/:userID/friends', friendRoutes);
 app.use('/users', userRoutes);
 app.use('/lists/:listID/', listElementRoutes);
 app.use('/lists', listRoutes);
+app.use('/location', locationRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/restaurants/:restaurantID', restaurantCheckinRoutes);
 app.use('/restaurants/:restaurantID/menuItems', menuItemRoutes);
