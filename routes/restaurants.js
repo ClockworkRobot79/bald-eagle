@@ -9,6 +9,8 @@ const Recommendation = require('../models/recommendation');
 const Note = require('../models/note');
 const Restaurant = require('../models/restaurant');
 
+const GEO_KEY = '9gSzHyWUCOUp8Ql3Yi2K681TSN6fGRH6';
+
 // 'index' route
 router.get('/', (req, res) => {
     Restaurant.find({}).sort('name').exec((err, restaurants) => {
@@ -30,7 +32,7 @@ router.get('/', (req, res) => {
 
 // 'new' route
 router.get('/new', isLoggedIn, (req, res) => {
-    res.render('restaurants/new');
+    res.render('restaurants/new', {key: GEO_KEY});
 });
 
 // 'create' route
@@ -46,7 +48,7 @@ router.post('/', isLoggedIn, (req, res) => {
             long: req.body.long,
         },
     };
-    
+
     Restaurant.create(newRestaurant, (err, createdRestaurant) => {
         if (err) {
             console.error(`Error: ${err.message}`);
@@ -111,7 +113,7 @@ router.get('/:restaurantID', (req, res) => {
 router.get('/:restaurantID/edit', canEditRestaurant, (req, res) => {
     const { restaurant } = res.locals;
     if (restaurant) {
-        res.render('restaurants/edit', { restaurant });
+        res.render('restaurants/edit', {restaurant, key: GEO_KEY});
     }
 });
 
