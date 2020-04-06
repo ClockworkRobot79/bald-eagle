@@ -43,9 +43,8 @@
             <hr class="spacer">
 
             <h2>Notes</h2>
-            <form action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
-                <textarea name="note[body]" placeholder="Add notes here..." required><%= (note ? note.body : '') %></textarea>
-                <button class="btn btn-primary btn-block">Save</button>
+            <form id="note" action="/restaurants/<%= restaurant._id %>/menuItems/<%= menuItem._id %>/notes" method="POST">
+                <textarea name="note[body]" placeholder="Add notes here..." onchange="document.getElementById('note').submit()" required><%= (note ? note.body : '') %></textarea>
             </form>
             
             <hr class="spacer">
