@@ -5,7 +5,7 @@
     </div>
 
     <div class="new-item-form">
-        <form id="restaurant" class="form-inline" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" onsubmit="return validateForm()">
+        <form id="restaurant" class="form-inline" action="/restaurants/<%= restaurant._id %>?_method=PUT" method="POST" onsubmit="return validateAddress('restaurant')">
             <div class="form-group">
                 <input class="form-control" type="text" name="restaurant[name]" placeholder="Restaurant name" value="<%= restaurant.name %>" autofocus>
             </div>

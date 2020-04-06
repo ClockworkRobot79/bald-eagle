@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const request = require('request');
+const {getCookies} = require('../utils/misc');
 
 const {GEO_KEY} = process.env;
 
@@ -26,7 +27,9 @@ router.get('/latlong/:address', (req, res) => {
 });
 
 router.get('/address', (req, res) => {
-    const {lat, long} = req.query;
+    const cookies = getCookies(req);
+    const lat = cookies['lat'];
+    const long = cookies['long'];
     if (!(lat && long)) {
         return res.json({});
     }

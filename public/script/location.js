@@ -1,4 +1,18 @@
-function findMe(source) {
+function getCookieValue(cookieName) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    cookieName += '=';
+    for (let i = 0; i < ca.length; i++) {
+        const c = ca[i].trim();
+        if (c.indexOf(cookieName) == 0) {
+            return c.substring(cookieName.length, c.length);
+        }
+    }
+
+    return undefined;
+}
+
+function findMe(reason) {
     if (!navigator.geolocation) {
         console.warn(`Geolocation is not supported by your browser`);
         return;
@@ -7,7 +21,7 @@ function findMe(source) {
     const success = (position) => {
         const {latitude, longitude} = position.coords;
 
-        if (source === 'form') {
+        if (reason === 'form') {
             // set addr using reverse geocoding
             const url = `/location/address?lat=${latitude}&long=${longitude}`;
             fetch(url).then(data => data.json()).then(res => {
@@ -32,10 +46,19 @@ function findMe(source) {
                     findMeElem.style.display = "none";
                 }
             }
-        } else if (source === 'url') {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (!urlParams.has('lat') && !urlParams.has('long')) {
-                window.location.replace(`${window.location.href}?lat=${latitude}&long=${longitude}`);
+        } else if (reason === 'cookie') {
+            const reloadPage = (getCookieValue('lat') === undefined && getCookieValue('long') === undefined);
+
+            // set them to expire in an hour, but always update them
+            // that way they are as current as possible, but we don't keep forcing the page to reload
+            const expTime = new Date(Date.now() + 1 * 60 * 60 * 1000);
+            const expires = `expires=${expTime.toUTCString()}`;
+            document.cookie = `lat=${latitude}; ${expires}`;
+            document.cookie = `long=${longitude}; ${expires}`;
+
+            // reload the page if they were set properly and they didn't exist to start with
+            if (reloadPage && getCookieValue('lat') && getCookieValue('long')) {
+                window.location.reload();
             }
         }
     };
@@ -47,7 +70,7 @@ function findMe(source) {
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
-function validateForm() {
+function validateAddress(formName) {
     // if the lat/long hidden fields aren't filled in, try to generate them from the address
     let latElem = document.getElementById('lat');
     let longElem = document.getElementById('long');
@@ -70,7 +93,7 @@ function validateForm() {
                 console.error(`Error geocoding address: ${err}`);
             }
 
-            document.getElementById('restaurant').submit();
+            document.getElementById(formName).submit();
         });
         return false;
     }
@@ -84,5 +107,28 @@ function invalidateLatLong() {
         document.getElementById('long').value = undefined;
     } catch(err) {
         console.error(`Failed to clear the lat/long fields: ${err}`);
+    }
+}
+
+function loadFilterByDistance(filterDistStr) {
+    const value = getCookieValue(filterDistStr);
+    if (value) {
+        document.getElementById(filterDistStr).value = value;
+    }
+}
+
+function filterByDistance(filterDistStr) {
+    try {
+        // update the cookie value from the select element
+        const dist = document.getElementById(filterDistStr).value;
+        const reloadPage = (dist !== getCookieValue(filterDistStr));
+        document.cookie = `${filterDistStr}=${dist}`;
+
+        // reload the page if the value changed so it can rerender with the udpated value
+        if (reloadPage) {
+            window.location.reload();
+        }
+    } catch(err) {
+        console.error(`Error changing the filter distance: ${err}`);
     }
 }

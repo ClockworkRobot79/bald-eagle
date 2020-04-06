@@ -3,7 +3,7 @@ const router = express.Router({mergeParams: true});
 
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { canEditRestaurant } = require('../middleware/restaurant');
-const { filterUserOwned, limitText } = require('../utils/misc');
+const { filterUserOwned, limitText, getCookies } = require('../utils/misc');
 const List = require('../models/list');
 const Recommendation = require('../models/recommendation');
 const Note = require('../models/note');
@@ -21,7 +21,48 @@ router.get('/', (req, res) => {
                     console.error(`Error getting restaurants: ${err.message}`);
                     res.redirect('/');
                 } else {
-                    res.render('restaurants/index', { restaurants, recommendations });
+                    const cookies = getCookies(req);
+                    const selectedValue = cookies['filterDist'] || 25;
+
+                    const filterByDist = (restaurants) => {
+                        const lat = cookies['lat'];
+                        const long = cookies['long'];
+                        if (isNaN(Number(lat)) || isNaN(Number(long))) {
+                            return restaurants;
+                        }
+
+                        const denom = (180 / Math.PI);
+                        const lat1 = lat / denom;
+                        const long1 = long / denom;
+
+                        const calcDist = (lat2, long2) => {
+                            return (3963.0 * Math.acos((Math.sin(lat1) * Math.sin(lat2)) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long2 - long1)));
+                        };
+
+                        return restaurants.filter((restaurant) => {
+                            const {lat, long} = restaurant.location;
+                            return (
+                                selectedValue === 'all' ||
+                                (!isNaN(Number(lat)) && !isNaN(Number(long)) && calcDist(lat / denom, long / denom) < Number(selectedValue))
+                            );
+                        });
+                    }
+
+                    const filterDistStr = `filterDist`;
+                    const headerContent = `<select id="${filterDistStr}" onchange="filterByDistance('${filterDistStr}')">
+                        <option value="25">25 miles</option>
+                        <option value="100">100 miles</option>
+                        <option value="500">500 miles</option>
+                        <option value="all">All</option>
+                    </select>`;
+
+
+                    res.render('restaurants/index', {
+                        restaurants: filterByDist(restaurants),
+                        recommendations,
+                        onload: `"loadFilterByDistance('${filterDistStr}'); findMe('cookie');"`,
+                        headerContent,
+                    });
                 }
             });
         }
