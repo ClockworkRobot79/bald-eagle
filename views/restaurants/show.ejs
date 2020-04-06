@@ -69,14 +69,16 @@
         <% if (restaurant.phone) { %>
             <h2>Phone</h2>
             <div class="container">
-                <%= restaurant.phone %>
+                <a href="tel:<%= restaurant.phone.replace(/\(|\)| |-/g,'') %>"><%= restaurant.phone %></a>
             </div>
         <% } %>
 
         <% if (restaurant.location && restaurant.location.address) { %>
             <h2>Address</h2>
             <div class="container">
-                <%= restaurant.location.address %>
+                <a href="http://maps.google.com/maps/place/<%= encodeURIComponent(restaurant.location.address) %>" target="_blank">
+                    <%= restaurant.location.address %>
+                </a>
             </div>
         <% } %>
 
