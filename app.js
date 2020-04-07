@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const cookieParser = require('cookie-parser');
 
 const User = require('./models/user');
 const seedData = require('./seedData');
@@ -31,6 +32,7 @@ app.use(express.static("./lib"));
 app.use(methodOverride('_method'));
 app.use(flash()); // this needs to come before passport configuration
 app.set('view engine', 'ejs');
+app.use(cookieParser());
 
 // set up express to store session info in the app
 app.use(expressSession({

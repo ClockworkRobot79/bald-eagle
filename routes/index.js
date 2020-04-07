@@ -7,6 +7,15 @@ const User = require('../models/user');
 
 // index route
 router.get('/', (req, res) => {
+    // first check if there is a stored URL to redirect to
+    if (req.cookies.loginRedirect) {
+        const redirectUrl = req.cookies.loginRedirect;
+        res.cookie('loginRedirect', undefined, {maxAge: 0, httpOnly: true});
+        return res.redirect(redirectUrl);
+    } else if (!req.user) {
+        return res.redirect('/restaurants');
+    }
+
     Recommendation.find({for: (req.user || {})._id}).populate('restaurant').populate('menuItem').sort('-updatedAt').exec((err, recommendations) => {
         if (err) {
             console.error(err);

@@ -46,13 +46,19 @@ router.put('/:userID', isLoggedIn, (req, res) => {
         const { user } = res.locals;
         req.body.email = req.body.username;
         Object.assign(user, req.body.user);
-        user.save();
-        req.flash(`success`, `Updated user info`);
+        delete user.password; // don't leave this laying around for security
+        (req.body.user.password ? user.changePassword(req.body.oldPassword, req.body.user.password) : Promise.resolve()).then(() => {
+            user.save();
+            req.flash(`success`, `Updated user info`);
+            return res.redirect(`/`);
+        }).catch(err => {
+            req.flash(`error`, `Failed to save user info, please check all fields and try again`);
+            return res.redirect('back');
+        });
     } else {
         req.flash(`error`, `Failed to update user info`);
+        return res.redirect('back');
     }
-
-    return res.redirect(`/`);
 });
 
 // 'delete' route

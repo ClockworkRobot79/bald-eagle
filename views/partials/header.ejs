@@ -16,9 +16,9 @@
         <nav class="navbar navbar-light bg-light sticky">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Order Envy</a>
-            </div>
-            <div class="centered">
-                <%- (locals.headerContent ? locals.headerContent : '') %>
+                <div>
+                    <%- (locals.headerContent ? locals.headerContent : '') %>
+                </div>
             </div>
             <ul class="nav nav-pills">
                 <% if (user) { %>

@@ -19,7 +19,7 @@
                 <input class="form-control" type="text" name="restaurant[description]" placeholder="Description" value="<%= restaurant.description %>">
             </div>
             <div class="form-group">
-                <input id="address" class="form-control" type="text" name="restaurant[address]" placeholder="Address" onchange="invalidateLatLong()"
+                <input id="address" class="form-control" type="text" name="restaurant[address]" placeholder="Address (at least City, State)" onchange="invalidateLatLong()"
                     value="<%= restaurant.location.address %>">
             </div>
             <div class="form-group">

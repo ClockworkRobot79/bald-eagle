@@ -15,7 +15,7 @@
             <div class="form-group">
                 <select class="form-control" name="menuItem[category]">
                     <% const categories = MenuItem.getCategories(); categories.forEach((category, idx) => { %>
-                        <option value="<%= category %>" <%= idx === categories.length - 1 ? 'selected' : '' %>><%= category %></option>
+                        <option value="<%= category %>" <%= category === 'Entree' ? 'selected' : '' %>><%= category %></option>
                     <% }); %>
                 </select>
             </div>

@@ -76,6 +76,10 @@ form textarea {
     padding: 5px;
 }
 
+.formButtonsContainer {
+    padding-top: 10px;
+}
+
 .rating:nth-child(odd) {
     background-color: #e9e9e9;
 }
