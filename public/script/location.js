@@ -51,7 +51,7 @@ function findMe(reason) {
 
             // set them to expire in an hour, but always update them
             // that way they are as current as possible, but we don't keep forcing the page to reload
-            const expTime = new Date(Date.now() + 1 * 60 * 60 * 1000);
+            const expTime = new Date(Date.now() + 3 * 60 * 60 * 1000);
             const expires = `expires=${expTime.toUTCString()}`;
             document.cookie = `lat=${latitude}; ${expires}`;
             document.cookie = `long=${longitude}; ${expires}`;
@@ -67,7 +67,20 @@ function findMe(reason) {
         console.warn(`Unable to retrieve your location`);
     };
 
-    navigator.geolocation.getCurrentPosition(success, error);
+    // if there are valid cookies for the location, call the succes function immediately
+    // otherwise, ask the user for permission to use their location
+    const lat = getCookieValue('lat');
+    const long = getCookieValue('long');
+    if (lat !== undefined && long !== undefined) {
+        success({
+            coords: {
+                lat,
+                long,
+            }
+        });
+    } else {
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
 }
 
 function validateAddress(formName) {
