@@ -47,7 +47,7 @@ function findMe(reason) {
                 }
             }
         } else if (reason === 'cookie') {
-            const reloadPage = (getCookieValue('lat') === undefined && getCookieValue('long') === undefined);
+            const reloadPage = (isNaN(Number(getCookieValue('lat'))) || isNaN(Number(getCookieValue('long'))));
 
             // set them to expire in an hour, but always update them
             // that way they are as current as possible, but we don't keep forcing the page to reload
@@ -69,13 +69,13 @@ function findMe(reason) {
 
     // if there are valid cookies for the location, call the succes function immediately
     // otherwise, ask the user for permission to use their location
-    const lat = getCookieValue('lat');
-    const long = getCookieValue('long');
-    if (lat !== undefined && long !== undefined) {
+    const lat = Number(getCookieValue('lat'));
+    const long = Number(getCookieValue('long'));
+    if (!isNaN(lat) && !isNaN(long)) {
         success({
             coords: {
-                lat,
-                long,
+                latitude: lat,
+                longitude: long,
             }
         });
     } else {
