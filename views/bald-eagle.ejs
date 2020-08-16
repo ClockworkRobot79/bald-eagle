@@ -1,0 +1,22 @@
+<% include ./partials/header %>
+
+    <h2>Facts about bald eagles:</h2> 
+
+    <% facts.forEach((fact) => { %>
+        <p class="fact">
+            <%= fact.text[tellTheTruth] %>
+            <div class="centered">
+                <img src="/img/<%= fact.img %><%= (tellTheTruth ? "" : "_fake") %>.jpg" width="720" height="500" />
+            </div>
+        </p>
+    <% }); %>
+
+    <p>
+        <% if (tellTheTruth) { %>
+            These facts are boring... Click <a href="/bald-eagle">here</a> for more fun!
+        <% } else { %>
+            Don't believe us?  Click <a href="?tellTheTruth">here</a> for our sources!
+        <% } %>
+    </p>
+
+<% include ./partials/footer %>

@@ -1,13 +1,19 @@
 <% include ./partials/header %>
 
-    <h2>Helping you enjoy your next meal</h2> 
+    <h2>All the facts you need to know about your favorite birds</h2> 
 
-    <a class="btn btn-block btn-primary" href="/restaurants">Restaurants</a></li>
-    <% if (user) { %>
-        <a class="btn btn-block btn-outline-primary bg-light" href="/users/<%= user._id %>">Friends</a>
-        <a class="btn btn-block btn-outline-primary bg-light" href="/lists">Lists</a>
-    <% } %>
+    <p class="fact">
+        Welcome to Avery's Aviary, your one stop for all things bird. <br>
+        We work hard collecting interesting facts about your favorite birds for you to enjoy.
+    </p>
 
-    <% include ./partials/recommendList %>
+    <div class="centered">
+        <img src="/img/home.jpg" width="720" height="500" />
+    </div>
+
+    <p class="fact">
+        Please select from the links above to learn all about these wonderful animals! <br>
+        Come learn fun facts about lots of different birds we we work hard to make sure our facts are correct!
+    </p>
 
 <% include ./partials/footer %>

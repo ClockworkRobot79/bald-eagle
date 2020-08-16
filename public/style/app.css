@@ -59,15 +59,20 @@ form textarea {
     text-align: center;
 }
 
+.header-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .row div .btn {
     width: 100%;
 }
 
-.menu-item-container {
-    margin-bottom: 5px;
-    padding: 5px;
+.fact {
+    margin: 20px;
+    padding: 10px;
     border-width: 1px;
-    border-color: grey;
+    border-color: lightgrey;
     border-style: solid;
     background: #f8f9fa;
 }
