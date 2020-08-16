@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
-const expressSession = require('express-session');
+// const expressSession = require('express-session');
 
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
 
 const indexRoutes = require('./routes/index');
 

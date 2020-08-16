@@ -1,7 +1,7 @@
 {
-  "name": "orderenvy",
+  "name": "bald-eagle",
   "version": "1.0.0",
-  "description": "App to keep track of what you've had at a restaurant and what you want next time",
+  "description": "Made up facts about birds",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -19,5 +19,17 @@
     "lodash": "^4.17.15",
     "request": "^2.88.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClockworkRobot79/bald-eagle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ClockworkRobot79/bald-eagle/issues"
+  },
+  "homepage": "https://github.com/ClockworkRobot79/bald-eagle#readme"
 }
